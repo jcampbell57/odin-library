@@ -157,6 +157,18 @@ button:active {
 
 
 
+/* Popup styling */
+
+#newBook {
+    display: block;
+}
+
+#noNewBook {
+    display: none;
+}
+
+
+
 /* Footer styling */
 
 .footer {

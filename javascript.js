@@ -1,6 +1,7 @@
-const addBookBtn = document.querySelector('.addBook');
+const addBookBtn = document.querySelector('.addBookBtn');
 const bookStatusBtn = document.querySelector('.bookStatusBtn')
 const card = document.querySelector('.card')
+const popup = document.querySelector('.popup')
 
 let myLibrary = [];
 
@@ -27,6 +28,13 @@ for (book in myLibrary) {
 const book1 = new book('How to WIN', 'Jason Campbell', '666', 'hella read that');
 
 book1.info();
+
+
+
+// add book 
+addBookBtn.addEventListener('click', () => {
+    popup.id = 'newBook';
+})
 
 
 
