@@ -4,7 +4,7 @@
     --primary-color: whitesmoke;
     --secondary-color: hsl(39, 100%, 89%);
     --primary-accent: hsl(260, 57%, 50%);
-    --secondary-accent: hsl(260, 57%, 80%);
+    --secondary-accent: hsl(260, 57%, 85%);
     --read: hsl(120, 100%, 25%);
     --not-read: hsl(0, 100%, 27%);
     --shadow-standard: 1px 1px 6px rgb(0, 0, 0, 0.2);
@@ -186,9 +186,9 @@ button:active {
 
 .formContainer {
     background-color: var(--primary-color);
-    box-shadow: var(--shadow-standard);
+    box-shadow: var(--shadow-hover);
     border-radius: 6px;
-    padding: 4px;
+    padding: 8px;
     
     position: inherit;
     width: min-content;
@@ -199,6 +199,17 @@ button:active {
 
 #bookInfo {
     border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    gap: 10px;
+}
+
+.formRow {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
 }
 
 
