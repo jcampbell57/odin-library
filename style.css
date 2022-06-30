@@ -2,7 +2,7 @@
     /* --primary-color: antiquewhite;
     --secondary-color: burlywood; */
     --primary-color: whitesmoke;
-    --secondary-color: antiquewhite;
+    --secondary-color: hsl(39, 100%, 89%);
     --primary-accent: hsl(260, 57%, 50%);
     --secondary-accent: hsl(260, 57%, 80%);
     --read: hsl(120, 100%, 25%);
@@ -23,8 +23,40 @@ body {
     flex-direction: column; */
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 155px calc(100vh - 200px) 45px;
+    grid-template-rows: 145px calc(100vh - 190px) 45px;
 }
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: calc(10px + 0.5rem);
+    background-color: var(--secondary-accent);
+    box-shadow: var(--shadow-standard);
+    font-weight: 600;
+}
+
+button:hover {
+    box-shadow: var(--shadow-hover);
+    cursor: pointer;
+}
+
+button:active {
+    box-shadow: var(--shadow-active);
+}
+
+/* Card button */
+.bookStatusBtn#notRead {
+    background-color: hsl(0, 100%, 92%);
+    margin-top: 10px;
+}
+
+.bookStatusBtn#read {
+    background-color: hsl(120, 100%, 95%);
+    margin-top: 10px;
+}
+
+
+/* Header styling */
 
 .header {
     background-color: var(--secondary-color);
@@ -56,35 +88,14 @@ body {
     margin: 0;
 }
 
-.footer {
-    box-shadow: 1px -1px 4px rgb(0, 0, 0, 0.2);
-    background-color: var(--secondary-color);
-    text-align: center;
-    height: 50px;
-    margin-top: auto;
-}
-
 .buttonContainer {
     display: flex;
     justify-content: end;
 }
 
-button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: calc(10px + 0.5rem);
-    background-color: var(--secondary-accent);
-    box-shadow: var(--shadow-standard);
-}
 
-button:hover {
-    box-shadow: var(--shadow-hover);
-    cursor: pointer;
-}
 
-button:active {
-    box-shadow: var(--shadow-active);
-}
+/* Content styling */
 
 .content {
     background-color: var(--primary-color);
@@ -97,6 +108,10 @@ button:active {
     grid-template-columns: repeat(auto-fit, minmax(200px, 300px));
 }
 
+
+
+/* Book card styling */
+
 .card {
     display: flex;
     flex-direction: column;
@@ -108,12 +123,12 @@ button:active {
     box-shadow: var(--shadow-standard);
 }
 
-.card:hover {
-    box-shadow: var(--shadow-hover);
+.card#read {
+    border-left: 6px solid var(--read);
 }
 
-.card:active {
-    box-shadow: var(--shadow-active);
+.card#notRead {
+    border-left: 6px solid var(--not-read);
 }
 
 .bookDelete {
@@ -129,4 +144,25 @@ button:active {
 
 .bookDelete > img:hover {
     cursor: pointer;
+}
+
+.bookTitle {
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.bookPages {
+    font-size: 0.8rem;
+}
+
+
+
+/* Footer styling */
+
+.footer {
+    box-shadow: 1px -1px 4px rgb(0, 0, 0, 0.2);
+    background-color: var(--secondary-color);
+    text-align: center;
+    height: 45px;
+    margin-top: auto;
 }

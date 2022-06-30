@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <script src="javascript.js"></script>
+    <script src="javascript.js" defer></script>
     <title>Wormhole Library</title>
 </head>
 <body>
@@ -17,18 +17,18 @@
                 <h1 id="title">Wormhole</h1>
             </div>
             <div class="buttonContainer">
-                <button>Add Book</button>
+                <button class="addBookBtn">Add Book</button>
             </div>
         </div>
         
         <div class="content">
             <div class="cardContainer">
-                <div class="card">
-                    <div class="bookDelete"><img src="assets/trash-can-outline.svg" alt="delete" ></div>
+                <div class="card" id="notRead">
+                    <div class="bookDelete"><img src="assets/delete.svg" alt="delete"></div>
                     <span class="bookTitle">Test Book</span>
-                    <span class="bookAuthor">ME!</span>
-                    <span class="bookPages">123</span>
-                    <span class="bookStatus">Not read!</span>
+                    <span class="bookAuthor">by ME!</span>
+                    <span class="bookPages">123 pages</span>
+                    <button class="bookStatusBtn" id="notRead">Not read!</button>
                 </div>
             </div>
         </div>

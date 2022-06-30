@@ -1,3 +1,6 @@
+const addBookBtn = document.querySelector('.addBook');
+const bookStatusBtn = document.querySelector('.bookStatusBtn')
+const card = document.querySelector('.card')
 
 let myLibrary = [];
 
@@ -24,3 +27,20 @@ for (book in myLibrary) {
 const book1 = new book('How to WIN', 'Jason Campbell', '666', 'hella read that');
 
 book1.info();
+
+
+
+// toggle book status
+bookStatusBtn.addEventListener('click', (e) => {
+    if (e.target.id === 'read') {
+        card.id = 'notRead'
+        bookStatusBtn.id = 'notRead'
+        bookStatusBtn.textContent = 'Not read!'
+    } else if (e.target.id === 'notRead') {
+        card.id = 'read'
+        bookStatusBtn.id = 'read'
+        bookStatusBtn.textContent = 'Read!'
+    } else {
+        console.log('this is weird')
+    }
+})
