@@ -1,8 +1,12 @@
 :root {
     /* --primary-color: antiquewhite;
     --secondary-color: burlywood; */
-    --primary-color: whitesmoke;
-    --secondary-color: hsl(39, 100%, 89%);
+    --primary-color: gray;
+    --secondary-color: lightgray;
+    --dark-primary-color: ;
+    --dark-secondary-color: ;
+    --light-primary-color: whitesmoke;
+    --light-secondary-color: hsl(39, 100%, 89%);
     --primary-accent: hsl(260, 57%, 50%);
     --secondary-accent: hsl(260, 57%, 85%);
     --read: hsl(120, 100%, 25%);
@@ -25,6 +29,7 @@ body {
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 145px calc(100vh - 190px) 45px;
+    color: dark;
 }
 
 
@@ -185,7 +190,7 @@ button:active {
 }
 
 .formContainer {
-    background-color: var(--primary-color);
+    background-color: var(--secondary-color);
     box-shadow: var(--shadow-hover);
     border-radius: 6px;
     padding: 8px;
@@ -211,6 +216,13 @@ button:active {
     gap: 4px;
 
 }
+
+.formRow input[type='text'], 
+.formRow input[type='tel'] {
+    padding: 6px;
+    border-radius: 6px;
+}
+
 
 
 /* Footer styling */

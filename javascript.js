@@ -1,9 +1,17 @@
+// page elements
 const addBookBtn = document.querySelector('.addBookBtn');
-const bookStatusBtn = document.querySelector('.bookStatusBtn')
-const card = document.querySelector('.card')
-const popup = document.querySelector('.popup')
-const closePopup = document.getElementById('closePopup')
+const submitBookBtn = document.getElementById('submitBookBtn');
+const bookStatusBtn = document.querySelector('.bookStatusBtn');
+const card = document.querySelector('.card');
+const removeCard = document.getElementById('removeCard');
+const popup = document.querySelector('.popup');
+const closePopup = document.getElementById('closePopup');
+const bookTitle = document.getElementById('bookTitle');
+const bookAuthor = document.getElementById('bookAuthor');
+const bookPages = document.getElementById('bookPages');
+const bookStatus = document.getElementById('bookStatus');
 
+// library array
 let myLibrary = [];
 
 // object constructor for new book
@@ -23,6 +31,7 @@ function addBookToLibrary() {
 }
 
 for (book in myLibrary) {
+
 }
 
 
@@ -42,6 +51,18 @@ closePopup.addEventListener('click', () => {
     popup.id = 'noNewBook';
 })
 
+// submit book
+submitBookBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    console.log(e);
+    console.log(bookTitle);
+    console.log(bookAuthor.textContent);
+    console.log(bookPages.textContent);
+    console.log(bookStatus.textContent);
+    popup.id = 'noNewBook';
+
+})
+
 // toggle book status
 bookStatusBtn.addEventListener('click', (e) => {
     if (e.target.id === 'read') {
@@ -55,4 +76,9 @@ bookStatusBtn.addEventListener('click', (e) => {
     } else {
         console.log('this is weird')
     }
+})
+
+// remove book / card
+removeCard.addEventListener('click', (e) => {
+    e.path[2].remove();
 })
