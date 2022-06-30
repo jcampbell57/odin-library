@@ -2,6 +2,7 @@ const addBookBtn = document.querySelector('.addBookBtn');
 const bookStatusBtn = document.querySelector('.bookStatusBtn')
 const card = document.querySelector('.card')
 const popup = document.querySelector('.popup')
+const closePopup = document.getElementById('closePopup')
 
 let myLibrary = [];
 
@@ -31,12 +32,15 @@ book1.info();
 
 
 
-// add book 
+// open popup / add book 
 addBookBtn.addEventListener('click', () => {
     popup.id = 'newBook';
 })
 
-
+// close popup
+closePopup.addEventListener('click', () => {
+    popup.id = 'noNewBook';
+})
 
 // toggle book status
 bookStatusBtn.addEventListener('click', (e) => {

@@ -24,7 +24,7 @@
         <div class="content">
             <div class="cardContainer">
                 <div class="card" id="notRead">
-                    <div class="bookDelete"><img src="assets/delete.svg" alt="delete"></div>
+                    <div class="closeContainer" id="bookDelete"><img src="assets/delete.svg" alt="delete"></div>
                     <span class="bookTitle">Test Book</span>
                     <span class="bookAuthor">by ME!</span>
                     <span class="bookPages">123 pages</span>
@@ -35,8 +35,9 @@
 
         <div class="popup" id="noNewBook">
             <div class="formContainer">
+                <div class="closeContainer"><img src="assets/delete.svg" alt="delete" id="closePopup"></div>
                 <form action="" method="get" class="" onsubmit="">
-                    <fieldset>
+                    <fieldset id="bookInfo">
                         <legend>Book Info</legend>
 
                         <div class="formRow">
