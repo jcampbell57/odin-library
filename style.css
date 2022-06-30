@@ -1,8 +1,15 @@
 :root {
-    --primary-color: antiquewhite;
-    --secondary-color: burlywood;
+    /* --primary-color: antiquewhite;
+    --secondary-color: burlywood; */
+    --primary-color: whitesmoke;
+    --secondary-color: antiquewhite;
     --primary-accent: hsl(260, 57%, 50%);
     --secondary-accent: hsl(260, 57%, 80%);
+    --read: hsl(120, 100%, 25%);
+    --not-read: hsl(0, 100%, 27%);
+    --shadow-standard: 1px 1px 6px rgb(0, 0, 0, 0.2);
+    --shadow-hover: 1px 1px 6px rgb(0, 0, 0, 0.4);
+    --shadow-active: 1px 1px 6px rgb(0, 0, 0, 0.6);
 }
 
 body {
@@ -12,21 +19,45 @@ body {
 }
 
 .container {
-    display: flex;
-    flex-direction: column;
+    /* display: flex;
+    flex-direction: column; */
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 155px calc(100vh - 200px) 45px;
 }
 
 .header {
     background-color: var(--secondary-color);
+    box-shadow: var(--shadow-standard);
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    padding: 20px;
+}
+
+.titleContainer {
+    display: flex;
+    align-items: center;
+}
+
+#logo {
+    /* SVG filter for primary accent color */
+    filter: invert(22%) sepia(25%) saturate(7470%) hue-rotate(251deg) brightness(98%) contrast(91%);
+
+    height: 40px;
+    width: 40px;
 }
 
 #title {
     color: var(--primary-accent);
-    text-align: center;
     text-shadow: 1px 1px 4px rgb(0, 0, 0, 0.1);
+    margin: 0;
 }
 
 .footer {
+    box-shadow: 1px -1px 4px rgb(0, 0, 0, 0.2);
     background-color: var(--secondary-color);
     text-align: center;
     height: 50px;
@@ -40,24 +71,23 @@ body {
 
 button {
     padding: 10px 20px;
-    margin: 20px;
     border: none;
     border-radius: calc(10px + 0.5rem);
     background-color: var(--secondary-accent);
-    box-shadow: 1px 1px 4px rgb(0, 0, 0, 0.2);
+    box-shadow: var(--shadow-standard);
 }
 
 button:hover {
-    box-shadow: 1px 1px 4px rgb(0, 0, 0, 0.4);
+    box-shadow: var(--shadow-hover);
+    cursor: pointer;
 }
 
 button:active {
-    box-shadow: 1px 1px 4px rgb(0, 0, 0, 0.6);
+    box-shadow: var(--shadow-active);
 }
 
 .content {
     background-color: var(--primary-color);
-    justify-self: stretch;
 }
 
 .cardContainer {
@@ -71,16 +101,32 @@ button:active {
     display: flex;
     flex-direction: column;
     text-align: center;
-    padding: 20px;
+    padding: 10px;
     border-radius: 6px;
+    border-left: 6px solid var(--not-read);
     background-color: var(--secondary-accent);
-    box-shadow: 1px 1px 4px rgb(0, 0, 0, 0.2);
+    box-shadow: var(--shadow-standard);
 }
 
 .card:hover {
-    box-shadow: 1px 1px 4px rgb(0, 0, 0, 0.4);
+    box-shadow: var(--shadow-hover);
 }
 
 .card:active {
-    box-shadow: 1px 1px 4px rgb(0, 0, 0, 0.6);
+    box-shadow: var(--shadow-active);
+}
+
+.bookDelete {
+    text-align: right;
+    color: darkred;
+}
+
+.bookDelete > img {
+    filter: invert(10%) sepia(58%) saturate(5585%) hue-rotate(358deg) brightness(98%) contrast(117%);
+    height: 20px;
+    width: 20px;
+}
+
+.bookDelete > img:hover {
+    cursor: pointer;
 }
