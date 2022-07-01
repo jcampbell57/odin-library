@@ -5,6 +5,7 @@ const bookList = document.getElementById('bookList')
 const newBookForm = document.querySelector('.newBookForm')
 const popup = document.querySelector('.popup');
 const closePopup = document.getElementById('closePopup');
+const error = document.querySelector('.error');
 
 
 
@@ -66,28 +67,35 @@ closePopup.addEventListener('click', () => {
 
 // Add book to library
 newBookForm.addEventListener('submit', (e) => {    
-    //prevent actual submit & hide form
+    //prevent actual submit
     e.preventDefault();
-    popup.id = 'noNewBook';
     
     // get form values 
     const title = document.getElementById('bookTitle').value
     const author = document.getElementById('bookAuthor').value
     const pages = document.getElementById('bookPages').value
 
-    // make book
-    let newBook = new book(title, author, pages)
+    // validate form values
+    if (title === '' || author === '' || pages === '') {
+        error.id = 'error';
+    } else {
+        // hide form
+        popup.id = 'noNewBook';
+        
+        // make book
+        let newBook = new book(title, author, pages)
 
-    // clear form  
-    document.getElementById('bookTitle').value = '';
-    document.getElementById('bookAuthor').value = '';
-    document.getElementById('bookPages').value = '';
+        // clear form  
+        document.getElementById('bookTitle').value = '';
+        document.getElementById('bookAuthor').value = '';
+        document.getElementById('bookPages').value = '';
 
-    // add book to myLibrary array
+        // add book to myLibrary array
 
 
-    // create row
-    populateRows(newBook);
+        // create row
+        populateRows(newBook);
+    }
 })
 
 

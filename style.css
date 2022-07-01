@@ -171,16 +171,6 @@ tr#notRead {
 
 /* Popup styling */
 
-/* show pupup */
-#newBook {
-    display: block;
-}
-
-/* hide popup */
-#noNewBook {
-    display: none;
-}
-
 .popup{
     background-color: rgb(0, 0, 0, 0.6);
     height: 100vh;
@@ -217,10 +207,37 @@ tr#notRead {
 
 }
 
+.required,
+.error {
+    color: darkred;
+}
+
+#error {
+    display: block;
+}
+
+#noError {
+    display: none;
+}
+
+.error {
+    text-align: center;
+}
+
 .formRow input[type='text'], 
 .formRow input[type='tel'] {
     padding: 6px;
     border-radius: 6px;
+}
+
+/* show pupup */
+#newBook {
+    display: block;
+}
+
+/* hide popup */
+#noNewBook {
+    display: none;
 }
 
 

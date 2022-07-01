@@ -55,7 +55,7 @@
                         <legend>Book Info</legend>
 
                         <div class="formRow">
-                            <label for="bookTitle"><span class="formLabel">Book title</span></label>
+                            <label for="bookTitle">Book title <span class="required">*</span></label>
                             <input type="text"
                                    id="bookTitle"
                                    name="bookTitle"
@@ -63,7 +63,7 @@
                         </div>
 
                         <div class="formRow">
-                            <label for="bookAuthor"><span class="formLabel">Author</span></label>
+                            <label for="bookAuthor">Author <span class="required">*</span></label>
                             <input type="text"
                                    id="bookAuthor"
                                    name="bookAuthor"
@@ -71,12 +71,14 @@
                         </div>
 
                         <div class="formRow">
-                            <label for="bookPages"><span class="formLabel"># of pages</span></label>
+                            <label for="bookPages"># of pages <span class="required">*</span></label>
                             <input type="tel"
                                    id="bookPages"
                                    name="bookPages"
                                    placeholder="460">
                         </div>
+
+                        <span class="error" id="noError">Please fill out all fields</span>
 
                         <button type='submit' id="submitBookBtn">Add Book</button>
 
