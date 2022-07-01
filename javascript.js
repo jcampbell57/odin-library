@@ -6,6 +6,7 @@ const bookList = document.getElementById('bookList')
 const bookStatusBtn = document.querySelectorAll('.bookStatusBtn');
 const removeRow = document.querySelectorAll('#removeRow');
 
+const newBookForm = document.querySelector('.newBookForm')
 const popup = document.querySelector('.popup');
 const closePopup = document.getElementById('closePopup');
 const submitBookBtn = document.getElementById('submitBookBtn');
@@ -26,11 +27,12 @@ let myLibrary = [
         pages: '460',
     },
     {
-        title: 'A Random Walk Down Wall St',
+        title: 'A Random Walk Down Wall Street',
         author: 'Burton Malkiel',
         pages: '464',
     },
 ];
+
 
 // object constructor for new book
 function book (title, author, pages) {
@@ -43,19 +45,85 @@ book.prototype.info = function() {
     return `${this.title} by ${this.author}, ${this.pages} pages, ${this.read}.`
 }; 
 
+
+// create rows from library array
+displayBooks = function () {
+    myLibrary.forEach((book) => {
+        console.log(book);
+        populateRows(book);
+    }); 
+}
+
+
+
+const book1 = new book('How to WIN', 'Jason Campbell', '420', 'hella read that');
+console.log(book1.info());
+
+
+
 function addBookToLibrary() {
     let newBook = object.create(book.prototype)
 }
 
-myLibrary.forEach((storedBook) => {
-    console.log(storedBook);
-    populateRows(storedBook);
-});
 
-const book1 = new book('How to WIN', 'Jason Campbell', '420', 'hella read that');
 
-book1.info();
-console.log(book1.info());
+// add book / row
+function populateRows(book) {
+    // create new row
+    const newRow = document.createElement('tr')
+    newRow.setAttribute('ID', 'notRead')
+
+    // populate row with book info
+    newRow.innerHTML = `
+    <td class='bookTitle'>${book.title}</td>
+    <td class='bookAuthor'>${book.author}</td>
+    <td class='bookPages'>${book.pages} pages</td>    
+    `;
+
+    // create and append status and delete buttons
+    const newBookStatus = document.createElement('td');
+    newBookStatus.setAttribute('class', 'bookStatus');
+    // new book status button
+    const newButton = document.createElement('button');
+    newButton.setAttribute('class', 'bookStatusBtn');
+    newButton.setAttribute('id', 'notRead');
+    newButton.textContent = 'Not read!';
+    newButton.addEventListener('click', (e) => {
+        if (e.target.id === 'read') {
+            e.path[2].id = 'notRead'
+            e.target.id = 'notRead'
+            e.target.textContent = 'Not read!'
+        } else if (e.target.id === 'notRead') {
+            e.path[2].id = 'read'
+            e.target.id = 'read'
+            e.target.textContent = 'Read!'
+        } else {
+            console.log('this is weird')
+        }
+    })
+    // append button to container
+    newBookStatus.appendChild(newButton);
+
+    const newCloseContainer = document.createElement('td');
+    newCloseContainer.setAttribute('class', 'closeContainer');
+    // new delete row button
+    const newImg = document.createElement('Img');
+    newImg.src = 'assets/delete.svg'
+    newImg.setAttribute('id', 'removeRow');
+    newImg.setAttribute('alt', 'delete');
+    newImg.addEventListener('click', (e) => {
+        e.path[2].remove();
+    })
+    // append button to container
+    newCloseContainer.appendChild(newImg);
+
+    // append button containers to row
+    newRow.appendChild(newBookStatus);    
+    newRow.appendChild(newCloseContainer);
+
+    // append row to table
+    bookList.appendChild(newRow);
+}
 
 
 
@@ -69,155 +137,24 @@ closePopup.addEventListener('click', () => {
     popup.id = 'noNewBook';
 })
 
-
-
 // submit book
-submitBookBtn.addEventListener('click', (e) => {    
+newBookForm.addEventListener('submit', (e) => {    
+    //prevent actual submit & hide form
     e.preventDefault();
     popup.id = 'noNewBook';
-    addRow();
+    
+    // get values and make book
+    const title = bookTitle.value
+    const author = bookAuthor.value
+    const pages = bookPages.value
+    let newBook = new book(title, author, pages)
 
-    // for debugging
-    // console.log(bookTitle.value);
-    // console.log(bookAuthor.value);
-    // console.log(bookPages.value);
+    // add book to myLibrary array
+
+
+    // create row
+    populateRows(newBook);
 })
-
-
-
-// add book / row
-function populateRows(storedBook) {
-    // create new row
-    const newRow = document.createElement('tr')
-    newRow.setAttribute('ID', 'notRead')
-
-    // populate row with book info
-    const newBookTitle = document.createElement('td');
-    newBookTitle.setAttribute('class', 'bookTitle');
-    newBookTitle.textContent = storedBook.title;
-
-    const newBookAuthor = document.createElement('td');
-    newBookAuthor.setAttribute('class', 'bookAuthor');
-    newBookAuthor.textContent = storedBook.author;
-
-    const newBookPages = document.createElement('td');
-    newBookPages.setAttribute('class', 'bookPages');
-    newBookPages.textContent = storedBook.pages + ' pages';
-
-    const newBookStatus = document.createElement('td');
-    newBookStatus.setAttribute('class', 'bookStatus');
-    // new book status button
-    const newButton = document.createElement('button');
-    newButton.setAttribute('class', 'bookStatusBtn');
-    newButton.setAttribute('id', 'notRead');
-    newButton.textContent = 'Not read!';
-    newButton.addEventListener('click', (e) => {
-        if (e.target.id === 'read') {
-            e.path[2].id = 'notRead'
-            e.target.id = 'notRead'
-            e.target.textContent = 'Not read!'
-        } else if (e.target.id === 'notRead') {
-            e.path[2].id = 'read'
-            e.target.id = 'read'
-            e.target.textContent = 'Read!'
-        } else {
-            console.log('this is weird')
-        }
-    })
-    // append button to container
-    newBookStatus.appendChild(newButton);
-
-    const newCloseContainer = document.createElement('td');
-    newCloseContainer.setAttribute('class', 'closeContainer');
-    // new delete row button
-    const newImg = document.createElement('Img');
-    newImg.src = 'assets/delete.svg'
-    newImg.setAttribute('id', 'removeRow');
-    newImg.setAttribute('alt', 'delete');
-    newImg.addEventListener('click', (e) => {
-        e.path[2].remove();
-    })
-    // append button to container
-    newCloseContainer.appendChild(newImg);
-
-    // append book info to row
-    newRow.appendChild(newBookTitle);
-    newRow.appendChild(newBookAuthor);
-    newRow.appendChild(newBookPages);
-    newRow.appendChild(newBookStatus);    
-    newRow.appendChild(newCloseContainer);
-
-    // append row to table
-    bookList.appendChild(newRow);
-}
-
-
-
-// add book / row
-function addRow() {
-    // create new row
-    const newRow = document.createElement('tr')
-    newRow.setAttribute('ID', 'notRead')
-
-    // populate row with book info
-    const newBookTitle = document.createElement('td');
-    newBookTitle.setAttribute('class', 'bookTitle');
-    newBookTitle.textContent = bookTitle.value;
-
-    const newBookAuthor = document.createElement('td');
-    newBookAuthor.setAttribute('class', 'bookAuthor');
-    newBookAuthor.textContent = bookAuthor.value;
-
-    const newBookPages = document.createElement('td');
-    newBookPages.setAttribute('class', 'bookPages');
-    newBookPages.textContent = bookPages.value + ' pages';
-
-    const newBookStatus = document.createElement('td');
-    newBookStatus.setAttribute('class', 'bookStatus');
-    // new book status button
-    const newButton = document.createElement('button');
-    newButton.setAttribute('class', 'bookStatusBtn');
-    newButton.setAttribute('id', 'notRead');
-    newButton.textContent = 'Not read!';
-    newButton.addEventListener('click', (e) => {
-        if (e.target.id === 'read') {
-            e.path[2].id = 'notRead'
-            e.target.id = 'notRead'
-            e.target.textContent = 'Not read!'
-        } else if (e.target.id === 'notRead') {
-            e.path[2].id = 'read'
-            e.target.id = 'read'
-            e.target.textContent = 'Read!'
-        } else {
-            console.log('this is weird')
-        }
-    })
-    // append button to container
-    newBookStatus.appendChild(newButton);
-
-    const newCloseContainer = document.createElement('td');
-    newCloseContainer.setAttribute('class', 'closeContainer');
-    // new delete row button
-    const newImg = document.createElement('Img');
-    newImg.src = 'assets/delete.svg'
-    newImg.setAttribute('id', 'removeRow');
-    newImg.setAttribute('alt', 'delete');
-    newImg.addEventListener('click', (e) => {
-        e.path[2].remove();
-    })
-    // append button to container
-    newCloseContainer.appendChild(newImg);
-
-    // append book info to row
-    newRow.appendChild(newBookTitle);
-    newRow.appendChild(newBookAuthor);
-    newRow.appendChild(newBookPages);
-    newRow.appendChild(newBookStatus);    
-    newRow.appendChild(newCloseContainer);
-
-    // append row to table
-    bookList.appendChild(newRow);
-}
 
 
 
@@ -249,3 +186,5 @@ bookStatusBtn.forEach(Btn => {
         }
     })
 })
+
+displayBooks();
