@@ -10,19 +10,7 @@ const error = document.querySelector('.error');
 
 
 // library array
-let myLibrary = [
-    // adding the placeholder books below breaks the book constructor
-    {
-        title: 'The Intelligent Investor',
-        author: 'Benjamin Graham',
-        pages: '460',
-    },
-    {
-        title: 'A Random Walk Down Wall Street',
-        author: 'Burton Malkiel',
-        pages: '464',
-    },
-];
+let myLibrary = [];
 
 
 
@@ -34,24 +22,19 @@ function book (title, author, pages) {
 }
 
 book.prototype.info = function() {
-    return `${this.title} by ${this.author}, ${this.pages} pages, ${this.read}.`
+    //add if statement for read status comment
+    return `${this.title} by ${this.author}, ${this.pages} pages.`
 }; 
 
 
 
-// create rows from library array
-displayBooks = function () {
-    myLibrary.forEach((book) => {
-        console.log(book);
-        populateRows(book);
-    }); 
-}
-
-
-
-// test book
-const book1 = new book('How to WIN', 'Jason Campbell', '420', 'hella read that');
-console.log(book1.info());
+// placeholder books
+const book1 = new book('The Intelligent Investor', 'Benjamin Graham', '460');
+addBookToLibrary(book1);
+const book2 = new book('A Random Walk Down Wall Street', 'Burton Malkiel', '464');
+addBookToLibrary(book2);
+// console.log(book2.info());
+// console.log(book2.info());
 
 
 
@@ -65,7 +48,7 @@ closePopup.addEventListener('click', () => {
     popup.id = 'noNewBook';
 })
 
-// Add book to library
+// submit new book
 newBookForm.addEventListener('submit', (e) => {    
     //prevent actual submit
     e.preventDefault();
@@ -94,23 +77,26 @@ newBookForm.addEventListener('submit', (e) => {
 
 
         // create row
-        populateRows(newBook);
+        addBookToLibrary(newBook);
     }
 })
 
 
 
-// add book / row
-function populateRows(book) {
+// Add book to library
+function addBookToLibrary(newBook) {
+    // add book to library array
+    myLibrary.push(newBook);
+
     // create new row
     const newRow = document.createElement('tr')
     newRow.setAttribute('ID', 'notRead')
 
     // populate row with book info
     newRow.innerHTML = `
-    <td class='bookTitle'>${book.title}</td>
-    <td class='bookAuthor'>${book.author}</td>
-    <td class='bookPages'>${book.pages} pages</td>    
+    <td class='bookTitle'>${newBook.title}</td>
+    <td class='bookAuthor'>${newBook.author}</td>
+    <td class='bookPages'>${newBook.pages} pages</td>    
     `;
 
     // new container for book status button
@@ -145,6 +131,12 @@ function populateRows(book) {
     newImg.src = 'assets/delete.svg'
     newImg.setAttribute('alt', 'delete');
     newImg.addEventListener('click', (e) => {
+        myLibrary.forEach((book, index) => {
+            if (book.title === `${newBook.title}`) {
+                console.log('yay');
+                myLibrary.splice(index, 1);
+            }   
+        })
         e.target.parentElement.parentElement.remove();
     })
     // append button to container
@@ -157,7 +149,3 @@ function populateRows(book) {
     // append row to table
     bookList.appendChild(newRow);
 }
-
-
-
-displayBooks();
