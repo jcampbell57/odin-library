@@ -152,7 +152,7 @@ thead tr {
 } */
 
 tbody tr {
-    background-color: lightgray;
+    background-color: var(--secondary-color);
     border-bottom: 1px solid var(--secondary-accent);
     font-size: 1.2rem;
     text-align: center;
