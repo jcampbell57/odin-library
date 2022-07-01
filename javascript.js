@@ -20,24 +20,23 @@ const bookStatus = document.getElementById('bookStatus');
 // library array
 let myLibrary = [
     // adding the placeholder books below breaks the book constructor
-    // {
-    //     title: 'The Intelligent Investor',
-    //     author: 'Benjamin Graham',
-    //     pages: '460',
-    // },
-    // {
-    //     title: 'A Random Walk Down Wall St',
-    //     author: 'Burton Malkiel',
-    //     pages: '464',
-    // },
+    {
+        title: 'The Intelligent Investor',
+        author: 'Benjamin Graham',
+        pages: '460',
+    },
+    {
+        title: 'A Random Walk Down Wall St',
+        author: 'Burton Malkiel',
+        pages: '464',
+    },
 ];
 
 // object constructor for new book
-function book (title, author, pages, read) {
+function book (title, author, pages) {
     this.title = title
     this.author = author
     this.pages = pages
-    this.read = read
 }
 
 book.prototype.info = function() {
@@ -48,9 +47,10 @@ function addBookToLibrary() {
     let newBook = object.create(book.prototype)
 }
 
-for (book in myLibrary) {
-
-}
+myLibrary.forEach((storedBook) => {
+    console.log(storedBook);
+    populateRows(storedBook);
+});
 
 const book1 = new book('How to WIN', 'Jason Campbell', '420', 'hella read that');
 
@@ -86,7 +86,7 @@ submitBookBtn.addEventListener('click', (e) => {
 
 
 // add book / row
-function addRow() {
+function populateRows(storedBook) {
     // create new row
     const newRow = document.createElement('tr')
     newRow.setAttribute('ID', 'notRead')
@@ -94,19 +94,18 @@ function addRow() {
     // populate row with book info
     const newBookTitle = document.createElement('td');
     newBookTitle.setAttribute('class', 'bookTitle');
-    newBookTitle.textContent = bookTitle.value;
+    newBookTitle.textContent = storedBook.title;
 
     const newBookAuthor = document.createElement('td');
     newBookAuthor.setAttribute('class', 'bookAuthor');
-    newBookAuthor.textContent = bookAuthor.value;
+    newBookAuthor.textContent = storedBook.author;
 
     const newBookPages = document.createElement('td');
     newBookPages.setAttribute('class', 'bookPages');
-    newBookPages.textContent = bookPages.value + ' pages';
+    newBookPages.textContent = storedBook.pages + ' pages';
 
     const newBookStatus = document.createElement('td');
     newBookStatus.setAttribute('class', 'bookStatus');
-    // newBookStatus.innerHTML = "<button class='bookStatusBtn' id='notRead'>Not read!</button>";
     // new book status button
     const newButton = document.createElement('button');
     newButton.setAttribute('class', 'bookStatusBtn');
@@ -130,7 +129,74 @@ function addRow() {
 
     const newCloseContainer = document.createElement('td');
     newCloseContainer.setAttribute('class', 'closeContainer');
-    // newCloseContainer.innerHTML = "<img src='assets/delete.svg' alt='delete' id='removeRow'>";
+    // new delete row button
+    const newImg = document.createElement('Img');
+    newImg.src = 'assets/delete.svg'
+    newImg.setAttribute('id', 'removeRow');
+    newImg.setAttribute('alt', 'delete');
+    newImg.addEventListener('click', (e) => {
+        e.path[2].remove();
+    })
+    // append button to container
+    newCloseContainer.appendChild(newImg);
+
+    // append book info to row
+    newRow.appendChild(newBookTitle);
+    newRow.appendChild(newBookAuthor);
+    newRow.appendChild(newBookPages);
+    newRow.appendChild(newBookStatus);    
+    newRow.appendChild(newCloseContainer);
+
+    // append row to table
+    bookList.appendChild(newRow);
+}
+
+
+
+// add book / row
+function addRow() {
+    // create new row
+    const newRow = document.createElement('tr')
+    newRow.setAttribute('ID', 'notRead')
+
+    // populate row with book info
+    const newBookTitle = document.createElement('td');
+    newBookTitle.setAttribute('class', 'bookTitle');
+    newBookTitle.textContent = bookTitle.value;
+
+    const newBookAuthor = document.createElement('td');
+    newBookAuthor.setAttribute('class', 'bookAuthor');
+    newBookAuthor.textContent = bookAuthor.value;
+
+    const newBookPages = document.createElement('td');
+    newBookPages.setAttribute('class', 'bookPages');
+    newBookPages.textContent = bookPages.value + ' pages';
+
+    const newBookStatus = document.createElement('td');
+    newBookStatus.setAttribute('class', 'bookStatus');
+    // new book status button
+    const newButton = document.createElement('button');
+    newButton.setAttribute('class', 'bookStatusBtn');
+    newButton.setAttribute('id', 'notRead');
+    newButton.textContent = 'Not read!';
+    newButton.addEventListener('click', (e) => {
+        if (e.target.id === 'read') {
+            e.path[2].id = 'notRead'
+            e.target.id = 'notRead'
+            e.target.textContent = 'Not read!'
+        } else if (e.target.id === 'notRead') {
+            e.path[2].id = 'read'
+            e.target.id = 'read'
+            e.target.textContent = 'Read!'
+        } else {
+            console.log('this is weird')
+        }
+    })
+    // append button to container
+    newBookStatus.appendChild(newButton);
+
+    const newCloseContainer = document.createElement('td');
+    newCloseContainer.setAttribute('class', 'closeContainer');
     // new delete row button
     const newImg = document.createElement('Img');
     newImg.src = 'assets/delete.svg'
