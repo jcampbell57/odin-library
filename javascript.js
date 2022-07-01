@@ -1,24 +1,35 @@
 // page elements
 const addBookBtn = document.querySelector('.addBookBtn');
 const submitBookBtn = document.getElementById('submitBookBtn');
-const bookStatusBtn = document.querySelectorAll('.bookStatusBtn');
 
-const cardContainer = document.querySelector('.cardContainer')
-const card = document.querySelector('.card');
-const removeCard = document.querySelectorAll('#removeCard');
+const bookStatusBtn = document.querySelectorAll('.bookStatusBtn');
+const removeRow = document.querySelectorAll('#removeRow');
 
 const popup = document.querySelector('.popup');
 const closePopup = document.getElementById('closePopup');
+
 const bookTitle = document.getElementById('bookTitle');
 const bookAuthor = document.getElementById('bookAuthor');
 const bookPages = document.getElementById('bookPages');
 const bookStatus = document.getElementById('bookStatus');
 
 // library array
-let myLibrary = [];
+let myLibrary = [
+    // adding the placeholder books below breaks the book constructor
+    // {
+    //     title: 'The Intelligent Investor',
+    //     author: 'Benjamin Graham',
+    //     pages: '460',
+    // },
+    // {
+    //     title: 'A Random Walk Down Wall St',
+    //     author: 'Burton Malkiel',
+    //     pages: '464',
+    // },
+];
 
 // object constructor for new book
-function book(title, author, pages, read) {
+function book (title, author, pages, read) {
     this.title = title
     this.author = author
     this.pages = pages
@@ -57,15 +68,25 @@ closePopup.addEventListener('click', () => {
 
 
 // submit book
-submitBookBtn.addEventListener('click', (e) => {
-    
+submitBookBtn.addEventListener('click', (e) => {    
     e.preventDefault();
-    console.log(bookTitle.value);
-    console.log(bookAuthor.value);
-    console.log(bookPages.value);
-    console.log(bookStatus.value);
     popup.id = 'noNewBook';
+    addCard();
 
+    // for debugging
+    // console.log(bookTitle.value);
+    // console.log(bookAuthor.value);
+    // console.log(bookPages.value);
+})
+
+
+
+// add book / row
+
+
+
+// add book / card
+function addCard() {
     // create new card
     const newCard = document.createElement('div');
     newCard.setAttribute('class', 'card');
@@ -79,15 +100,15 @@ submitBookBtn.addEventListener('click', (e) => {
 
     const newBookTitle = document.createElement('span');
     newBookTitle.setAttribute('class', 'bookTitle');
-    newBookTitle.textContent = 'by ' + bookTitle.value;
+    newBookTitle.textContent = bookTitle.value;
 
     const newBookAuthor = document.createElement('span');
     newBookAuthor.setAttribute('class', 'bookAuthor');
-    newBookAuthor.textContent = bookAuthor.value;
+    newBookAuthor.textContent = 'by ' + bookAuthor.value;
 
     const newBookPages = document.createElement('span');
     newBookPages.setAttribute('class', 'bookPages');
-    newBookPages.textContent = bookPages.value = 'pages';
+    newBookPages.textContent = bookPages.value + 'pages';
 
     const newBookStatus = document.createElement('button');
     newBookStatus.setAttribute('class', 'bookStatusBtn');
@@ -104,7 +125,19 @@ submitBookBtn.addEventListener('click', (e) => {
 
     // append card to page
     cardContainer.appendChild(newCard);
-})
+}
+
+
+
+// remove book / row
+removeRow.forEach(Btn => {
+    Btn.addEventListener('click', (e) => {
+        //need to figure out new way
+        // console.log(e.composedPath())
+        // old way
+        e.path[3].remove();
+    })
+}) 
 
 
 
@@ -112,27 +145,15 @@ submitBookBtn.addEventListener('click', (e) => {
 bookStatusBtn.forEach(Btn => {
     Btn.addEventListener('click', (e) => {
         if (e.target.id === 'read') {
-            card.id = 'notRead'
-            bookStatusBtn.id = 'notRead'
-            bookStatusBtn.textContent = 'Not read!'
+            e.path[2].id = 'notRead'
+            e.target.id = 'notRead'
+            e.target.textContent = 'Not read!'
         } else if (e.target.id === 'notRead') {
-            card.id = 'read'
-            bookStatusBtn.id = 'read'
-            bookStatusBtn.textContent = 'Read!'
+            e.path[2].id = 'read'
+            e.target.id = 'read'
+            e.target.textContent = 'Read!'
         } else {
             console.log('this is weird')
         }
     })
 })
-
-
-
-// remove book / card
-removeCard.forEach(Btn => {
-    Btn.addEventListener('click', (e) => {
-        //need to figure out new way
-        // console.log(e.composedPath())
-        // old way
-        e.path[2].remove();
-    })
-}) 

@@ -22,15 +22,26 @@
         </div>
         
         <div class="content">
-            <div class="cardContainer">
-                <div class="card" id="notRead">
-                    <div class="closeContainer"><img src="assets/delete.svg" alt="delete" id="removeCard"></div>
-                    <span class="bookTitle">Test Book</span>
-                    <span class="bookAuthor">by ME!</span>
-                    <span class="bookPages">123 pages</span>
-                    <button class="bookStatusBtn" id="notRead">Not read!</button>
-                </div>
-            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th># of pages</th>
+                        <th>Status</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="booklist">
+                    <tr id="notRead">
+                        <td class="bookTitle">The Intelligent Investor</td>
+                        <td class="bookAuthor">Benjamin Graham</td>
+                        <td class="bookPages">460</td>
+                        <td><button class="bookStatusBtn" id="notRead">Not read!</button></td>
+                        <td><div class="closeContainer"><img src="assets/delete.svg" alt="delete" id="removeRow"></div></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
 
         <div class="popup" id="noNewBook">
@@ -64,14 +75,6 @@
                                    id="bookPages"
                                    name="bookPages"
                                    placeholder="460">
-                        </div>
-
-                        <div class="formRow">
-                            <label for="bookStatus"><span class="formLabel">Have you read this book?</span></label>
-                            <input type="dropdown"
-                                   id="bookStatus"
-                                   name="bookStatus"
-                                   placeholder="Not read!">
                         </div>
 
                         <button id="submitBookBtn">Add Book</button>
