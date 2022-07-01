@@ -9,12 +9,6 @@ const removeRow = document.querySelectorAll('#removeRow');
 const newBookForm = document.querySelector('.newBookForm')
 const popup = document.querySelector('.popup');
 const closePopup = document.getElementById('closePopup');
-const submitBookBtn = document.getElementById('submitBookBtn');
-
-const bookTitle = document.getElementById('bookTitle');
-const bookAuthor = document.getElementById('bookAuthor');
-const bookPages = document.getElementById('bookPages');
-const bookStatus = document.getElementById('bookStatus');
 
 
 
@@ -143,10 +137,12 @@ newBookForm.addEventListener('submit', (e) => {
     e.preventDefault();
     popup.id = 'noNewBook';
     
-    // get values and make book
-    const title = bookTitle.value
-    const author = bookAuthor.value
-    const pages = bookPages.value
+    // get form values 
+    const title = document.getElementById('bookTitle').value
+    const author = document.getElementById('bookAuthor').value
+    const pages = document.getElementById('bookPages').value
+
+    // make book
     let newBook = new book(title, author, pages)
 
     // add book to myLibrary array
