@@ -1,12 +1,13 @@
 // page elements
 const addBookBtn = document.querySelector('.addBookBtn');
-const submitBookBtn = document.getElementById('submitBookBtn');
 
+const bookList = document.getElementById('bookList')
 const bookStatusBtn = document.querySelectorAll('.bookStatusBtn');
 const removeRow = document.querySelectorAll('#removeRow');
 
 const popup = document.querySelector('.popup');
 const closePopup = document.getElementById('closePopup');
+const submitBookBtn = document.getElementById('submitBookBtn');
 
 const bookTitle = document.getElementById('bookTitle');
 const bookAuthor = document.getElementById('bookAuthor');
@@ -71,7 +72,7 @@ closePopup.addEventListener('click', () => {
 submitBookBtn.addEventListener('click', (e) => {    
     e.preventDefault();
     popup.id = 'noNewBook';
-    addCard();
+    addRow();
 
     // for debugging
     // console.log(bookTitle.value);
@@ -82,49 +83,41 @@ submitBookBtn.addEventListener('click', (e) => {
 
 
 // add book / row
+function addRow() {
+    // create new row
+    const newRow = document.createElement('tr')
+    newRow.setAttribute('ID', 'notRead')
 
+    // populate row with book info
+    const newBookTitle = document.createElement('td');
+    newBookTitle.setAttribute('class', 'bookTitle');
+    newBookTitle.textContent = bookTitle.value;
 
+    const newBookAuthor = document.createElement('td');
+    newBookAuthor.setAttribute('class', 'bookAuthor');
+    newBookAuthor.textContent = bookAuthor.value;
 
-// add book / card
-function addCard() {
-    // create new card
-    const newCard = document.createElement('div');
-    newCard.setAttribute('class', 'card');
-    newCard.setAttribute('id', 'notRead');
-    // cardContainer.appendChild(newCard);
+    const newBookPages = document.createElement('td');
+    newBookPages.setAttribute('class', 'bookPages');
+    newBookPages.textContent = bookPages.value + ' pages';
 
-    //populate card with book info
+    const newBookStatus = document.createElement('td');
+    newBookStatus.setAttribute('class', 'bookStatus');
+    newBookStatus.innerHTML = "<button class='bookStatusBtn' id='notRead'>Not read!</button>";
+
     const newCloseContainer = document.createElement('div');
     newCloseContainer.setAttribute('class', 'closeContainer');
     newCloseContainer.innerHTML = "<img src='assets/delete.svg' alt='delete' id='removeCard'>";
 
-    const newBookTitle = document.createElement('span');
-    newBookTitle.setAttribute('class', 'bookTitle');
-    newBookTitle.textContent = bookTitle.value;
+    // append book info to row
+    newRow.appendChild(newBookTitle);
+    newRow.appendChild(newBookAuthor);
+    newRow.appendChild(newBookPages);
+    newRow.appendChild(newBookStatus);    
+    newRow.appendChild(newCloseContainer);
 
-    const newBookAuthor = document.createElement('span');
-    newBookAuthor.setAttribute('class', 'bookAuthor');
-    newBookAuthor.textContent = 'by ' + bookAuthor.value;
-
-    const newBookPages = document.createElement('span');
-    newBookPages.setAttribute('class', 'bookPages');
-    newBookPages.textContent = bookPages.value + 'pages';
-
-    const newBookStatus = document.createElement('button');
-    newBookStatus.setAttribute('class', 'bookStatusBtn');
-    newBookStatus.setAttribute('id', 'notRead');
-    newBookStatus.textContent = 'Not read!';
-
-
-    // append book info to card
-    newCard.appendChild(newCloseContainer);
-    newCard.appendChild(newBookTitle);
-    newCard.appendChild(newBookAuthor);
-    newCard.appendChild(newBookPages);
-    newCard.appendChild(newBookStatus);    
-
-    // append card to page
-    cardContainer.appendChild(newCard);
+    // append row to table
+    bookList.appendChild(newRow);   
 }
 
 
@@ -135,7 +128,7 @@ removeRow.forEach(Btn => {
         //need to figure out new way
         // console.log(e.composedPath())
         // old way
-        e.path[3].remove();
+        e.path[2].remove();
     })
 }) 
 

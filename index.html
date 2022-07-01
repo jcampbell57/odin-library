@@ -25,20 +25,20 @@
             <table>
                 <thead>
                     <tr>
-                        <th>Title</th>
-                        <th>Author</th>
-                        <th># of pages</th>
-                        <th>Status</th>
-                        <th></th>
+                        <th class="bookTitle">Title</th>
+                        <th class="bookAuthor">Author</th>
+                        <th class="bookPages"># of pages</th>
+                        <th class="bookStatus">Status</th>
+                        <th class="closeContainer"></th>
                     </tr>
                 </thead>
-                <tbody id="booklist">
+                <tbody id="bookList">
                     <tr id="notRead">
                         <td class="bookTitle">The Intelligent Investor</td>
                         <td class="bookAuthor">Benjamin Graham</td>
                         <td class="bookPages">460</td>
-                        <td><button class="bookStatusBtn" id="notRead">Not read!</button></td>
-                        <td><div class="closeContainer"><img src="assets/delete.svg" alt="delete" id="removeRow"></div></td>
+                        <td class="bookStatus"><button class="bookStatusBtn" id="notRead">Not read!</button></td>
+                        <td class="closeContainer"><img src="assets/delete.svg" alt="delete" id="removeRow"></td>
                     </tr>
                 </tbody>
             </table>
