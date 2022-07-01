@@ -47,7 +47,8 @@ displayBooks = function () {
 }
 
 
-// Test book
+
+// test book
 const book1 = new book('How to WIN', 'Jason Campbell', '420', 'hella read that');
 console.log(book1.info());
 
@@ -109,6 +110,7 @@ function populateRows(book) {
     newBookStatus.setAttribute('class', 'bookStatus');
     // new book status button
     const newButton = document.createElement('button');
+    newButton.setAttribute('class', 'bookStatusBtn');
     newButton.setAttribute('id', 'notRead');
     newButton.textContent = 'Not read!';
     newButton.addEventListener('click', (e) => {
