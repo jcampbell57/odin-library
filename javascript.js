@@ -1,3 +1,4 @@
+
 // page elements
 const addBookBtn = document.querySelector('.addBookBtn');
 
@@ -13,6 +14,8 @@ const bookTitle = document.getElementById('bookTitle');
 const bookAuthor = document.getElementById('bookAuthor');
 const bookPages = document.getElementById('bookPages');
 const bookStatus = document.getElementById('bookStatus');
+
+
 
 // library array
 let myLibrary = [
@@ -49,10 +52,10 @@ for (book in myLibrary) {
 
 }
 
-
-const book1 = new book('How to WIN', 'Jason Campbell', '666', 'hella read that');
+const book1 = new book('How to WIN', 'Jason Campbell', '420', 'hella read that');
 
 book1.info();
+console.log(book1.info());
 
 
 
@@ -103,11 +106,41 @@ function addRow() {
 
     const newBookStatus = document.createElement('td');
     newBookStatus.setAttribute('class', 'bookStatus');
-    newBookStatus.innerHTML = "<button class='bookStatusBtn' id='notRead'>Not read!</button>";
+    // newBookStatus.innerHTML = "<button class='bookStatusBtn' id='notRead'>Not read!</button>";
+    // new book status button
+    const newButton = document.createElement('button');
+    newButton.setAttribute('class', 'bookStatusBtn');
+    newButton.setAttribute('id', 'notRead');
+    newButton.textContent = 'Not read!';
+    newButton.addEventListener('click', (e) => {
+        if (e.target.id === 'read') {
+            e.path[2].id = 'notRead'
+            e.target.id = 'notRead'
+            e.target.textContent = 'Not read!'
+        } else if (e.target.id === 'notRead') {
+            e.path[2].id = 'read'
+            e.target.id = 'read'
+            e.target.textContent = 'Read!'
+        } else {
+            console.log('this is weird')
+        }
+    })
+    // append button to container
+    newBookStatus.appendChild(newButton);
 
-    const newCloseContainer = document.createElement('div');
+    const newCloseContainer = document.createElement('td');
     newCloseContainer.setAttribute('class', 'closeContainer');
-    newCloseContainer.innerHTML = "<img src='assets/delete.svg' alt='delete' id='removeCard'>";
+    // newCloseContainer.innerHTML = "<img src='assets/delete.svg' alt='delete' id='removeRow'>";
+    // new delete row button
+    const newImg = document.createElement('Img');
+    newImg.src = 'assets/delete.svg'
+    newImg.setAttribute('id', 'removeRow');
+    newImg.setAttribute('alt', 'delete');
+    newImg.addEventListener('click', (e) => {
+        e.path[2].remove();
+    })
+    // append button to container
+    newCloseContainer.appendChild(newImg);
 
     // append book info to row
     newRow.appendChild(newBookTitle);
@@ -117,7 +150,7 @@ function addRow() {
     newRow.appendChild(newCloseContainer);
 
     // append row to table
-    bookList.appendChild(newRow);   
+    bookList.appendChild(newRow);
 }
 
 
