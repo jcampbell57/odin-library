@@ -9,31 +9,103 @@ const error = document.querySelector('.error');
 
 
 
-// library array
-let myLibrary = [];
+class book {
+
+    // library array
+    static myLibrary = [];
+
+    // Add book to library
+    static addToLibrary(newBook) {
+        // add book to library array
+        book.myLibrary.push(newBook);
+    
+        // create new row
+        const newRow = document.createElement('tr')
+        newRow.setAttribute('ID', 'notRead')
+    
+        // populate row with book info
+        newRow.innerHTML = `
+        <td class='bookTitle'>${newBook.title}</td>
+        <td class='bookAuthor'>${newBook.author}</td>
+        <td class='bookPages'>${newBook.pages} pages</td>    
+        `;
+    
+        // new container for book status button
+        const newBookStatus = document.createElement('td');
+        newBookStatus.setAttribute('class', 'bookStatus');
+        // new book status button
+        const newButton = document.createElement('button');
+        newButton.setAttribute('class', 'bookStatusBtn');
+        newButton.setAttribute('id', 'notRead');
+        newButton.textContent = 'Not read!';
+        newButton.addEventListener('click', (e) => {
+            if (e.target.id === 'read') {
+                e.target.parentElement.parentElement.id = 'notRead'
+                e.target.id = 'notRead'
+                e.target.textContent = 'Not read!'
+            } else if (e.target.id === 'notRead') {
+                e.target.parentElement.parentElement.id = 'read'
+                e.target.id = 'read'
+                e.target.textContent = 'Read!'
+            } else {
+                console.log('no button id detected.');
+            }
+        })
+        // append button to container
+        newBookStatus.appendChild(newButton);
+    
+        // new container for delete row button
+        const newCloseContainer = document.createElement('td');
+        newCloseContainer.setAttribute('class', 'closeContainer');
+        // new delete row button
+        const newImg = document.createElement('Img');
+        newImg.src = 'assets/delete.svg'
+        newImg.setAttribute('alt', 'delete');
+        newImg.addEventListener('click', (e) => {
+            book.myLibrary.forEach((item, index) => {
+                if (item.title === `${newBook.title}`) {
+                    console.log('yay');
+                    book.myLibrary.splice(index, 1);
+                }   
+            })
+            e.target.parentElement.parentElement.remove();
+        })
+        // append button to container
+        newCloseContainer.appendChild(newImg);
+    
+        // append button containers to row
+        newRow.appendChild(newBookStatus);    
+        newRow.appendChild(newCloseContainer);
+    
+        // append row to table
+        bookList.appendChild(newRow);
+    }
+
+
+    
+    constructor(title, author, pages) {
+        this.title = title
+        this.author = author
+        this.pages = pages
+    }
 
 
 
-// object constructor for new book
-function book (title, author, pages) {
-    this.title = title
-    this.author = author
-    this.pages = pages
+    get info() {
+        //add if statement for read status comment
+        return `${this.title} by ${this.author}, ${this.pages} pages.`
+    }; 
+
 }
-
-book.prototype.info = function() {
-    //add if statement for read status comment
-    return `${this.title} by ${this.author}, ${this.pages} pages.`
-}; 
 
 
 
 // placeholder books
 const book1 = new book('The Intelligent Investor', 'Benjamin Graham', '460');
-addBookToLibrary(book1);
+book.addToLibrary(book1);
 const book2 = new book('A Random Walk Down Wall Street', 'Burton Malkiel', '464');
-addBookToLibrary(book2);
-// console.log(book2.info());
+book.addToLibrary(book2);
+// console.log(book1.info());
 // console.log(book2.info());
 
 
@@ -77,75 +149,6 @@ newBookForm.addEventListener('submit', (e) => {
 
 
         // create row
-        addBookToLibrary(newBook);
+        book.addToLibrary(newBook);
     }
 })
-
-
-
-// Add book to library
-function addBookToLibrary(newBook) {
-    // add book to library array
-    myLibrary.push(newBook);
-
-    // create new row
-    const newRow = document.createElement('tr')
-    newRow.setAttribute('ID', 'notRead')
-
-    // populate row with book info
-    newRow.innerHTML = `
-    <td class='bookTitle'>${newBook.title}</td>
-    <td class='bookAuthor'>${newBook.author}</td>
-    <td class='bookPages'>${newBook.pages} pages</td>    
-    `;
-
-    // new container for book status button
-    const newBookStatus = document.createElement('td');
-    newBookStatus.setAttribute('class', 'bookStatus');
-    // new book status button
-    const newButton = document.createElement('button');
-    newButton.setAttribute('class', 'bookStatusBtn');
-    newButton.setAttribute('id', 'notRead');
-    newButton.textContent = 'Not read!';
-    newButton.addEventListener('click', (e) => {
-        if (e.target.id === 'read') {
-            e.target.parentElement.parentElement.id = 'notRead'
-            e.target.id = 'notRead'
-            e.target.textContent = 'Not read!'
-        } else if (e.target.id === 'notRead') {
-            e.target.parentElement.parentElement.id = 'read'
-            e.target.id = 'read'
-            e.target.textContent = 'Read!'
-        } else {
-            console.log('no button id detected.');
-        }
-    })
-    // append button to container
-    newBookStatus.appendChild(newButton);
-
-    // new container for delete row button
-    const newCloseContainer = document.createElement('td');
-    newCloseContainer.setAttribute('class', 'closeContainer');
-    // new delete row button
-    const newImg = document.createElement('Img');
-    newImg.src = 'assets/delete.svg'
-    newImg.setAttribute('alt', 'delete');
-    newImg.addEventListener('click', (e) => {
-        myLibrary.forEach((book, index) => {
-            if (book.title === `${newBook.title}`) {
-                console.log('yay');
-                myLibrary.splice(index, 1);
-            }   
-        })
-        e.target.parentElement.parentElement.remove();
-    })
-    // append button to container
-    newCloseContainer.appendChild(newImg);
-
-    // append button containers to row
-    newRow.appendChild(newBookStatus);    
-    newRow.appendChild(newCloseContainer);
-
-    // append row to table
-    bookList.appendChild(newRow);
-}
