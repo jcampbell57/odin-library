@@ -28,7 +28,7 @@ body {
     flex-direction: column; */
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 145px calc(100vh - 190px) 45px;
+    grid-template-rows: 145px calc(100vh - 205px) 60px;
     color: dark;
 }
 
@@ -247,7 +247,42 @@ tr#notRead {
 .footer {
     box-shadow: 1px -1px 4px rgb(0, 0, 0, 0.2);
     background-color: var(--secondary-color);
-    text-align: center;
-    height: 45px;
+    /* text-align: center; */
+    /* height: 45px; */
     margin-top: auto;
+}
+
+
+.footer {
+    padding: 1rem;
+    /* margin-top: auto; */
+    /* border-top: 3px solid var(--light-color); */
+
+    /* background-color: var(--secondary-color); */
+    /* color: var(--light-color); */
+
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+}
+
+.footer>p {
+    margin: 0;
+}
+
+/* centers github icon vertically */
+.footer>a {
+    display: flex;
+}
+
+.github {
+    height: 24px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.github:hover {
+    transform: rotate(-360deg) scale(1.2);
 }

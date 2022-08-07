@@ -64,7 +64,6 @@ class book {
         newImg.addEventListener('click', (e) => {
             book.myLibrary.forEach((item, index) => {
                 if (item.title === `${newBook.title}`) {
-                    console.log('yay');
                     book.myLibrary.splice(index, 1);
                 }   
             })
@@ -145,10 +144,33 @@ newBookForm.addEventListener('submit', (e) => {
         document.getElementById('bookAuthor').value = '';
         document.getElementById('bookPages').value = '';
 
-        // add book to myLibrary array
-
-
         // create row
         book.addToLibrary(newBook);
     }
 })
+
+
+const createFooter = () => {
+    // const body = document.querySelector('body');
+    const footer = document.querySelector('.footer');
+    const container = document.querySelector('.container')
+  
+    const copyright = document.createElement('p');
+    copyright.textContent = `Copyright © ${new Date().getFullYear()} jcampbell57`;
+  
+    const githubLink = document.createElement('a');
+    githubLink.href = 'https://github.com/jcampbell57';
+    githubLink.target = '_blank';
+  
+    const newGithubIcon = document.createElement('img');
+    newGithubIcon.src = './assets/GitHub-32px.png';
+    newGithubIcon.setAttribute('class', 'github');
+  
+    githubLink.appendChild(newGithubIcon);
+    footer.appendChild(copyright);
+    footer.appendChild(githubLink);
+  
+    container.appendChild(footer);
+  };
+
+  createFooter();
