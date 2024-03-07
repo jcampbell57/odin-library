@@ -59,7 +59,7 @@ class book {
         newCloseContainer.setAttribute('class', 'closeContainer');
         // new delete row button
         const newImg = document.createElement('Img');
-        newImg.src = 'assets/delete.svg'
+        newImg.src = '../assets/delete.svg'
         newImg.setAttribute('alt', 'delete');
         newImg.addEventListener('click', (e) => {
             book.myLibrary.forEach((item, index) => {
@@ -163,7 +163,7 @@ const createFooter = () => {
     githubLink.target = '_blank';
   
     const newGithubIcon = document.createElement('img');
-    newGithubIcon.src = './assets/GitHub-32px.png';
+    newGithubIcon.src = '../assets/GitHub-32px.png';
     newGithubIcon.setAttribute('class', 'github');
   
     githubLink.appendChild(newGithubIcon);
