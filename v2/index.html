@@ -9,6 +9,41 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  yo
+  <header></header>
+  <main>
+    <table>
+      <thead>
+        <tr>
+          <th class='bookTitle'>Title</th>
+          <th class='bookAuthor'>Author</th>
+          <th class='bookYear'>Year published</th>
+          <th class='bookPages'># of pages</th>
+          <th class='bookStatus'>Status</th>
+          <th class='removeBook'></th>
+        </tr>
+      </thead>
+
+      <tbody id='bookList'></tbody>
+  </table>
+
+  </main>
+  <div id="modalOverlay" aria-hidden="true" hidden>
+    <div id="modal" aria-labelledby="modalTitle">
+      <h2 id="modalTitle">Add Book</h2>
+     
+      <form id="modalForm">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+        <br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <br>
+        <button type="submit">Submit</button>
+      </form>
+  
+      <button onclick="closeModal()">Close Modal</button>
+    </div>  
+  </div>
+  <footer></footer>
 </body>
 </html>
