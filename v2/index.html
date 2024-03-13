@@ -8,11 +8,20 @@
   <link rel="stylesheet" href="reset.css">
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
-  <header></header>
+<body class="light">
+  <header class="light">
+    <div class="titleContainer">
+      <img src="../assets/bookshelf.svg" alt="Logo" id="logo" class="SVGlight">
+      <h1 id="title">Wormhole</h1>
+    </div>
+    <div class="buttonContainer">
+      <img src="../assets/theme-toggle.svg" alt="theme toggle" id="themeToggle" class="SVGlight">
+      <button class="addBookBtn">Add Book</button>
+    </div>
+  </header>
   <main>
     <table>
-      <thead>
+      <thead class="light">
         <tr>
           <th class='bookTitle'>Title</th>
           <th class='bookAuthor'>Author</th>
@@ -24,11 +33,14 @@
       </thead>
 
       <tbody id='bookList'></tbody>
-  </table>
-
+    </table>
   </main>
-  <div id="modalOverlay" aria-hidden="true" hidden>
-    <div id="modal" aria-labelledby="modalTitle">
+  <div id="stats">
+    <span>books read: <span id="bookCount">0</span></span>
+    <span>pages read: <span id="pageCount">0</span></span>
+  </div>
+  <dialog id="modalOverlay" aria-hidden="true" hidden>
+    <div id="modal" role="dialog" aria-labelledby="modalTitle">
       <h2 id="modalTitle">Add Book</h2>
      
       <form id="modalForm">
@@ -43,7 +55,7 @@
   
       <button onclick="closeModal()">Close Modal</button>
     </div>  
-  </div>
+  </dialog>
   <footer></footer>
 </body>
 </html>
