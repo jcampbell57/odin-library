@@ -116,9 +116,7 @@ function displayBooks() {
 
 
 const createFooter = () => {
-  // const body = document.querySelector('body');
   const footer = document.querySelector('footer');
-  // const container = document.querySelector('main')
 
   const copyright = document.createElement('p');
   copyright.textContent = `Copyright © ${new Date().getFullYear()} jcampbell57`;
@@ -134,8 +132,6 @@ const createFooter = () => {
   githubLink.appendChild(newGithubIcon);
   footer.appendChild(copyright);
   footer.appendChild(githubLink);
-
-  // container.appendChild(footer);
 };
 
 createFooter();
