@@ -48,126 +48,156 @@ function Book(title, author, yearPublished, pages, isRead = false) {
 
 function addBookToLibrary(book) {
   myLibrary.push(book);
+  bookIndex = myLibrary.length - 1
+  displayBook(book, bookIndex)
 }
 
+function displayBook(book, index) {
+  const bookList = document.getElementById('bookList')
+  
+  // Create new row
+  const newRow = document.createElement('tr')
+  newRow.classList.add(book.isRead ? 'read' : 'notRead')
 
-function displayBooks() {
-  console.log(myLibrary);
-  myLibrary.forEach((book, index) => {
-    // Create new row
-    const newRow = document.createElement('tr')
-    newRow.classList.add(book.isRead ? 'read' : 'notRead')
+  // Add title cell
+  const titleCell = document.createElement('td');
+  titleCell.classList.add('bookTitle');
+  titleCell.textContent = book.title;
+  newRow.appendChild(titleCell);
 
-    // Add title cell
-    const titleCell = document.createElement('td');
-    titleCell.classList.add('bookTitle');
-    titleCell.textContent = book.title;
-    newRow.appendChild(titleCell);
+  // Add author cell
+  const authorCell = document.createElement('td');
+  authorCell.classList.add('bookAuthor');
+  authorCell.textContent = book.author;
+  newRow.appendChild(authorCell);
 
-    // Add author cell
-    const authorCell = document.createElement('td');
-    authorCell.classList.add('bookAuthor');
-    authorCell.textContent = book.author;
-    newRow.appendChild(authorCell);
+  // Add year published cell
+  const yearCell = document.createElement('td');
+  yearCell.classList.add('bookYear');
+  yearCell.textContent = book.yearPublished;
+  newRow.appendChild(yearCell);
 
-    // Add year published cell
-    const yearCell = document.createElement('td');
-    yearCell.classList.add('bookYear');
-    yearCell.textContent = book.yearPublished;
-    newRow.appendChild(yearCell);
+  // Add page count cell
+  const pagesCell = document.createElement('td');
+  pagesCell.classList.add('bookPages');
+  pagesCell.textContent = `${book.pages} pages`;
+  newRow.appendChild(pagesCell);
 
-    // Add page count cell
-    const pagesCell = document.createElement('td');
-    pagesCell.classList.add('bookPages');
-    pagesCell.textContent = `${book.pages} pages`;
-    newRow.appendChild(pagesCell);
+  // Add status cell
+  const statusCell = document.createElement('td');
+  statusCell.classList.add('bookStatus');
 
-    // Add status cell
-    const statusCell = document.createElement('td');
-    statusCell.classList.add('bookStatus');
+  const newButton = document.createElement('button');
+  newButton.classList.add('bookStatusBtn', book.isRead ? 'read' : 'notRead');
+  newButton.textContent = book.isRead ? 'Read!' : 'Not read!';
+  
+  const incrementStats = () => {
+    if (newButton.classList.contains('read')) {
+      bookCount.textContent = parseInt(bookCount.textContent) + 1;
+      pageCount.textContent = parseInt(pageCount.textContent) + (book.pages);
+    } else {
+      bookCount.textContent = parseInt(bookCount.textContent) - 1;
+      pageCount.textContent = parseInt(pageCount.textContent) - (book.pages);
+    }
+  }
 
-    const newButton = document.createElement('button');
-    newButton.classList.add('bookStatusBtn', book.isRead ? 'read' : 'notRead');
-    newButton.textContent = book.isRead ? 'Read!' : 'Not read!';
-    
-    const toggleStatus = () => {
-      // const bookRow = newButton.parentElement.parentElement;
-      const bookRow = newButton .closest('tr');
-      bookRow.classList.toggle('read')
-      bookRow.classList.toggle('notRead')
-      newButton.classList.toggle('read')
-      newButton.classList.toggle('notRead')
-      newButton.textContent = newButton.classList.contains('read') ? 'Read!' : 'Not read!';
+  if (book.isRead) {
+    incrementStats();
+  }
+
+  const toggleStatus = () => {
+    // const bookRow = newButton.parentElement.parentElement;
+    const bookRow = newButton .closest('tr');
+    bookRow.classList.toggle('read')
+    bookRow.classList.toggle('notRead')
+    newButton.classList.toggle('read')
+    newButton.classList.toggle('notRead')
+    newButton.textContent = newButton.classList.contains('read') ? 'Read!' : 'Not read!';
+    bookCount = document.getElementById('bookCount');
+    pageCount = document.getElementById('pageCount');
+    incrementStats();
+    };
+  
+  newButton.addEventListener('click', toggleStatus);
+  statusCell.appendChild(newButton);
+  newRow.appendChild(statusCell);
+  
+  // Add delete cell
+  const removeBook = document.createElement('td');
+  removeBook.classList.add('removeBook');
+  
+  const themeToggle = document.getElementById('themeToggle')
+  const darkMode = themeToggle.classList.contains('SVGlight')
+
+  const newImg = document.createElement('img');
+  newImg.classList.add('removeBookIcon', darkMode ? undefined : 'SVGlight')
+
+  newImg.src = '../assets/delete.svg';
+  newImg.alt = 'delete';
+  
+  const deleteBook = (row) => {
+    if (row.classList.contains('read')) {
       bookCount = document.getElementById('bookCount');
       pageCount = document.getElementById('pageCount');
-      if (newButton.classList.contains('read')) {
-        bookCount.textContent = parseInt(bookCount.textContent) + 1;
-        pageCount.textContent = parseInt(pageCount.textContent) + (book.pages);
-      } else {
-        bookCount.textContent = parseInt(bookCount.textContent) - 1;
-        pageCount.textContent = parseInt(pageCount.textContent) - (book.pages);
-      }
-    };
-    
-    newButton.addEventListener('click', toggleStatus);
-    statusCell.appendChild(newButton);
-    newRow.appendChild(statusCell);
-    
-    // Add delete cell
-    const removeBook = document.createElement('td');
-    removeBook.classList.add('removeBook');
-    
-    const newImg = document.createElement('img');
-    newImg.classList.add('removeBookIcon')
-    newImg.src = '../assets/delete.svg';
-    newImg.alt = 'delete';
-    
-    const deleteBook = (row) => {
-      if (row.classList.contains('read')) {
-        bookCount = document.getElementById('bookCount');
-        pageCount = document.getElementById('pageCount');
-        bookCount.textContent = parseInt(bookCount.textContent) - 1;
-        pageCount.textContent = parseInt(pageCount.textContent) - parseInt(row.querySelector('.bookPages').textContent);
-      }
-
-      if (index !== -1) {
-          myLibrary.splice(index, 1);
-      }
-      row.remove();
+      bookCount.textContent = parseInt(bookCount.textContent) - 1;
+      pageCount.textContent = parseInt(pageCount.textContent) - parseInt(row.querySelector('.bookPages').textContent);
     }
 
-    newImg.addEventListener('click', (e) => {
-      const rowToRemove = e.target.closest('tr');
-      if (rowToRemove) {
-        deleteBook(rowToRemove)
-      }
-    });
-    
-    removeBook.appendChild(newImg);
-    newRow.appendChild(removeBook);
+    if (index !== -1) {
+        myLibrary.splice(index, 1);
+    }
+    row.remove();
+  }
 
-    // Append row to table
-    bookList.appendChild(newRow);
+  newImg.addEventListener('click', (e) => {
+    const rowToRemove = e.target.closest('tr');
+      if (rowToRemove) {
+      // Ask for confirmation before deleting
+      const confirmed = window.confirm('Are you sure you want to delete this book?');
+      if (confirmed) {
+        deleteBook(rowToRemove);
+      }      
+    }
+  });
+  
+  removeBook.appendChild(newImg);
+  newRow.appendChild(removeBook);
+
+  // Append row to table
+  bookList.appendChild(newRow);
+}
+
+function displayBooks() {
+  myLibrary.forEach((book, index) => {
+    displayBook(book, index)
   })
 }
 
 
 // Add placeholder content
 
-book1 = new Book('The Intelligent Investor', 'Benjamin Graham', 1949, 460);
-addBookToLibrary(book1);
-// console.log(book1.info());
+placeholderBooks = [
+  ['The Intelligent Investor', 'Benjamin Graham', 1949, 460, true],
+  ['A Random Walk Down Wall Street', 'Burton Malkiel', 1973, 464, true],
+  ['The Hobbit', 'J.R.R. Tolkien', 1937, 295],
+  ['Evicted: Poverty and Profit in the American City', 'Matthew Desmond', 2016, 293, true],
+  ['Steve Jobs', 'Walter Isaacson', 2011, 630, true],
+  ['Cooked: A Natural History of Transformation', 'Michael Pollan', 2013, 480, true],
+  ['Thinking, Fast and Slow', 'Daniel Kahneman', 2011, 512],
+  ['How to Lie with Statistics', 'Darrell Huff', 1954, 145],
+  ["The Queen's Gambit", 'Walter Tevis', 1983, 266],
+  ["The Hitchhiker's Guide to the Galaxy", 'Douglas Adams', 1979, 193],
+  ['Sapiens: A Brief History of Humankind', 'Yuval Noah Harari', 2011, 414],
+  ['Crime and Punishment', 'Fyodor Dostoevsky', 1866, 671],
+]
 
-book2 = new Book('A Random Walk Down Wall Street', 'Burton Malkiel', 1973, 464);
-addBookToLibrary(book2);
-// console.log(book2.info());
+// Default sort (year published)
+placeholderBooks = placeholderBooks.sort((a, b) => a[2] - b[2]);
 
-book3 = new Book('The Hobbit', 'J.R.R. Tolkien', 1937, 295);
-addBookToLibrary(book3);
-// console.log(book3.info());
-
-displayBooks();
-
+placeholderBooks.forEach(book => {
+  placeholderBook = new Book(book[0], book[1], book[2], book[3], book[4]),
+  addBookToLibrary(placeholderBook)
+})
 
 // Grab page elements
 const body = document.querySelector('body');
