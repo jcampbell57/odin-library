@@ -23,11 +23,6 @@ const createFooter = () => {
 createFooter();
 
 
-// Grab page elements
-
-const bookList = document.getElementById('bookList')
-
-
 const myLibrary = [];
 
 
@@ -182,10 +177,13 @@ const themeToggle = document.getElementById('themeToggle')
 const table = document.querySelector('table')
 const thead = document.querySelector('thead')
 const addBookBtn = document.querySelector('.addBookBtn')
-const removeBookIcons = document.querySelectorAll('.removeBookIcon')
 const stats = document.getElementById('stats');
+const addBookDialog = document.getElementById('addBookDialog');
+const addBookForm = document.getElementById('addBookForm');
+const closeModal = document.querySelector('.closeModal');
 const footer = document.querySelector('footer');
 const githubIcon = document.querySelector('.github');
+
 
 
 // Add event listeners
@@ -198,12 +196,75 @@ themeToggle.addEventListener('mouseout', (e) => {
   themeToggle.classList.toggle('SVGlight')
 });
 
+// Add book modal
+addBookBtn.addEventListener("click", () => {
+  addBookDialog.showModal();
+});
+
+function clearFormFields(form) {
+  const inputs = form.querySelectorAll('input');
+  const statusInput = form.querySelector('#bookStatus');
+  inputs.forEach(input => {
+      input.value = '';
+  });
+  statusInput.checked = false;
+}
+
+addBookForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+
+  const form = e.target;
+  const titleInput = form.querySelector('#bookTitle');
+  const authorInput = form.querySelector('#bookAuthor');
+  const yearInput = form.querySelector('#bookYear');
+  const pagesInput = form.querySelector('#bookPages');
+  const statusInput = form.querySelector('#bookStatus');
+
+  const title = titleInput.value.trim();
+  const author = authorInput.value.trim();
+  const yearPublished = yearInput.value.trim();
+  const pages = parseInt(pagesInput.value, 10);
+  const isRead = statusInput.checked;
+
+  const error = document.querySelector('.error');
+  
+  // Validate form values
+  if (title === '' || author === '' || isNaN(pages) || pages <= 0) {
+    error.textContent = 'Please fill out all fields correctly.';
+    error.style.display = 'block';
+    return; // Exit early if validation fails
+  } else {
+    error.style.display = 'none';
+    
+    // Hide form
+    addBookDialog.close();
+    
+    // Create new book
+    const newBook = new Book(title, author, yearPublished, pages, isRead)
+
+    // Clear form fields
+    clearFormFields(form);
+
+    // Add book to library
+    addBookToLibrary(newBook);
+  }
+});
+
+closeModal.addEventListener('click', function(e) {
+  e.preventDefault();
+  addBookDialog.close();
+});
+
+
 // Dark mode toggler
+
 const projectsHeader = document.querySelector('.projectsHeader');
 const themeToggleIcon = document.querySelector('.themeToggleIcon');
 const themeToggler = document.querySelector('.themeToggle');
 
 function toggleDarkMode() {
+  const removeBookIcons = document.querySelectorAll('.removeBookIcon')
+
   body.classList.toggle('light')
   header.classList.toggle('light');
   logo.classList.toggle('SVGlight')
@@ -211,6 +272,7 @@ function toggleDarkMode() {
   table.classList.toggle('light')
   thead.classList.toggle('light')
   addBookBtn.classList.toggle('light')
+  addBookDialog.classList.toggle('light')
   stats.classList.toggle('light');  
   footer.classList.toggle('light');  
   githubIcon.classList.toggle('SVGlight');

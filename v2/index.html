@@ -23,11 +23,11 @@
     <table>
       <thead class="light">
         <tr>
-          <th class='bookTitle'>Title</th>
-          <th class='bookAuthor'>Author</th>
-          <th class='bookYear'>Year published</th>
-          <th class='bookPages'># of pages</th>
-          <th class='bookStatus'>Status</th>
+          <th data-type="string" data-column="bookTitle" class='bookTitle'>Title</th>
+          <th data-type="string" data-column="bookAuthor" class='bookAuthor'>Author</th>
+          <th data-type="number" data-column="bookYear" data-order="desc" class='bookYear sorted'>Year published</th>
+          <th data-type="number" data-column="bookPages" class='bookPages'># of pages</th>
+          <th data-type="string" data-column="bookStatus" class='bookStatus'>Status</th>
           <th class='removeBook'></th>
         </tr>
       </thead>
@@ -39,21 +39,38 @@
     <span>books read: <span id="bookCount">0</span></span>
     <span>pages read: <span id="pageCount">0</span></span>
   </div>
-  <dialog id="modalOverlay" aria-hidden="true" hidden>
+  <dialog id="addBookDialog">
     <div id="modal" role="dialog" aria-labelledby="modalTitle">
-      <h2 id="modalTitle">Add Book</h2>
-     
-      <form id="modalForm">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required>
-        <br>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
-        <br>
-        <button type="submit">Submit</button>
+      <form method="dialog" id="addBookForm">
+        <fieldset id="bookInfo">
+          <legend><h2 id="modalTitle">Book Info</h2></legend>
+          <br>
+          <label for="bookTitle">Title <span class="required">*</span></label>
+          <br>
+          <input type="text" id="bookTitle" name="bookTitle" required>
+          <br>
+          <label for="bookAuthor">Author <span class="required">*</span></label>
+          <br>
+          <input type="text" id="bookAuthor" name="bookAuthor" required>
+          <br>
+          <label for="bookYear">Year published</label>
+          <br>
+          <input type="tel" id="bookYear" name="bookYear">
+          <br>
+          <label for="bookPages"># of pages <span class="required">*</span></label>
+          <br>
+          <input type="tel" id="bookPages" name="bookPages" required>
+          <br>
+          <label for="bookStatus">Read?</label>
+          <input type="checkbox" id="bookStatus" name="bookStatus">
+          <span class="error" aria-hidden="true" hidden></span>
+          <br>
+          <div class="formButtons">
+            <button class="submitBookBtn" type="submit">Submit</button>
+            <button class="closeModal">Cancel</button>
+          </div>
+        </fieldset>
       </form>
-  
-      <button onclick="closeModal()">Close Modal</button>
     </div>  
   </dialog>
   <footer></footer>
