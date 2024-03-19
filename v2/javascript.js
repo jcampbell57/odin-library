@@ -322,3 +322,69 @@ themeToggle.addEventListener('keydown', function (event) {
     toggleDarkMode();
   }
 });
+
+
+// Table sort functionality
+
+// Function to sort the table
+function sortTable(column, dataType, header) {
+  const rows = Array.from(document.querySelectorAll('tbody tr'));
+  const sortOrder = header.dataset.order || 'asc';
+
+  rows.sort((rowA, rowB) => {
+    let valueA = rowA.querySelector(`td.${column}`).textContent;
+    let valueB = rowB.querySelector(`td.${column}`).textContent;
+
+    if (dataType === 'number') {
+      valueA = parseFloat(valueA);
+      valueB = parseFloat(valueB);
+    } else if (dataType === 'string') {
+      valueA = valueA.toLowerCase();
+      valueB = valueB.toLowerCase();
+    }
+
+    if (sortOrder === 'asc') {
+      return valueA > valueB ? 1 : -1;
+    } else {
+      return valueA < valueB ? 1 : -1;
+    }
+  });
+
+  // Reverse the sort order for the next click
+  header.dataset.order = sortOrder === 'asc' ? 'desc' : 'asc';
+
+  // Clear existing rows
+  const tableBody = document.querySelector('tbody');
+  tableBody.innerHTML = '';
+
+  // Append sorted rows to the table
+  rows.forEach(row => {
+    tableBody.appendChild(row);
+  });
+}
+
+// Function to initialize event listeners for sorting
+function initializeSorting() {
+  const tableHeaders = document.querySelectorAll('thead th');
+  tableHeaders.forEach(header => {
+    // Check if the header does not have the class 'removeBook'
+    if (!header.classList.contains('removeBook')) {
+      header.addEventListener('click', () => {
+        // Remove 'sorted' class from all headers
+        tableHeaders.forEach(header => {
+          header.classList.remove('sorted');
+        });
+
+        // Add 'sorted' class to the clicked header
+        header.classList.add('sorted');
+
+        const column = header.dataset.column;
+        const dataType = header.dataset.type;
+        sortTable(column, dataType, header);
+      });
+    }
+  });
+}
+
+// Call initializeSorting function to set up sorting on page load
+initializeSorting();
