@@ -1,9 +1,299 @@
 :root {
   --background-color: whitesmoke;
+  --background-color-dark: #3c3c3c;
+  --primary-color: MediumPurple;
+  --dark-red: #800000;
+  --dark-green: green;
+  --read: palegreen;
+  --notRead: lightpink;
+  --shadow-standard: 1px 1px 6px rgb(0, 0, 0, 0.2);
+  --shadow-hover: 1px 1px 6px rgb(0, 0, 0, 0.4);
+  --shadow-active: 1px 1px 6px rgb(0, 0, 0, 0.6);
 }
 
 body {
   font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
+  background-color: var(--background-color-dark);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+
+/* Header Styling */
+
+header {
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  background-color: var(--primary-color);
+  box-shadow: var(--shadow-standard);
+}
+
+.titleContainer {
+  display: flex;
+  align-items: center;
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+#logo {
+  height: 2rem;
+}
+
+.buttonContainer {
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  gap: 0.5rem;
+}
+
+#themeToggle {
+  height: 1.5rem;
+  cursor: pointer;
+}
+
+#themeToggle:active {
+  /*  gold */
+  filter: invert(73%) sepia(93%) saturate(510%) hue-rotate(358deg) brightness(101%) contrast(105%);
+}
+
+.addBookBtn {
+  padding: 0.4rem 0.8rem;
+  border-radius: 0.4rem;
+  border: 1px solid black;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.addBookBtn:hover {
+  box-shadow: var(--shadow-hover);
+}
+
+.addBookBtn.light:active,
+.addBookBtn:active {
+  box-shadow: var(--shadow-active);
+  border: 1px solid gold;
+}
+
+
+/* Conent Styling */
+
+main {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+table {
+  width: 100%;
+}
+
+thead {
+  border-bottom: 1px solid var(--background-color);
+  font-weight: 500;
+}
+
+th {
+  padding: 0.5rem;
+  border-radius: 0.4rem 0.4rem 0 0;
+}
+
+th:not(.removeBook):hover {
+  cursor: pointer;
+  background-color: hsl(0, 0%, 0%, 0.14);
+}
+
+th.sorted {
+  background-color: hsl(0, 0%, 0%, 0.08);
+}
+
+th:not(.removeBook):active {
+  cursor: pointer;
+  background-color: hsl(0, 0%, 0%, 0.20);
+}
+
+tr.read {
+  background-color: hsl(120, 93%, 79%, 0.2)
+}
+
+tr.notRead {
+  background-color: hsl(351, 100%, 86%, 0.15)
+}
+
+td {
+  padding: 0.5rem;
+  vertical-align: middle
+}
+
+.bookYear,
+.bookPages,
+.bookStatus,
+.removeBook {
+  text-align: center;
+}
+
+.bookStatusBtn {
+  padding: 0.4rem 0.8rem;
+  border-radius: 0.4rem;
+  cursor: pointer;
+  border: none;
+}
+
+.bookStatusBtn.read {
+  background-color: var(--read);
+}
+
+.bookStatusBtn.notRead {
+  background-color: var(--notRead);
+}
+
+.bookStatusBtn:hover {
+  box-shadow: var(--shadow-hover);
+}
+
+.bookStatusBtn:active {
+  box-shadow: var(--shadow-active);
+}
+
+.removeBookIcon {
+  cursor: pointer;
+}
+
+.removeBookIcon:hover {
+  /* darkred */
+  filter: invert(7%) sepia(58%) saturate(7125%) hue-rotate(1deg) brightness(105%) contrast(112%);
+}
+
+.removeBookIcon:active {
+  /*  gold */
+  filter: invert(73%) sepia(93%) saturate(510%) hue-rotate(358deg) brightness(101%) contrast(105%);
+}
+
+#stats {
+  margin-top:  auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+  align-items: end;
+}
+
+
+/* Modal styling */
+
+#addBookDialog {
+  border-radius: 0.4rem;
+}
+
+#modalTitle {
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+
+legend {
+  display: block;
+  text-align: center;
+}
+
+/* label {} */
+.required {
+  color: red
+}
+
+input {
+  padding: 0.5rem;
+  font-size: 1.1rem;
+  margin-top: 0.2rem;
+  margin-bottom: 1rem;
+  border-radius: 0.4rem;
+}
+
+.error {
+  margin-top: 0.4rem;
+  color: red;
+}
+
+.formButtons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.submitBookBtn {
+  padding: 0.4rem 0.8rem;
+}
+
+.closeModal {
+  padding: 0.4rem 0.8rem;
+}
+
+
+/* Footer styling */
+
+footer {
+  padding: 1rem;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  /* margin-top: auto; */
+  background-color: var(--primary-color);
+}
+
+/* centers github icon vertically */
+footer>a {
+  display: flex;
+}
+
+.github {
+  height: 24px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.github:hover {
+  transform: rotate(-360deg) scale(1.2);
+}
+
+
+/* Theme styling */
+
+body.light {
   background-color: var(--background-color);
 }
 
+.addBookBtn.light {
+  background-color: var(--background-color-dark);
+  color: var(--background-color);
+  border: 1px solid var(--background-color);
+}
+
+table.light {
+  color: var(--background-color);
+}
+
+thead.light {
+  border-bottom: 1px solid black;
+}
+
+#addBookDialog.light {
+  background-color: var(--background-color-dark);
+  color: var(--background-color);
+  border: 1px solid var(--background-color);
+}
+
+#stats.light {
+  color: var(--background-color);
+}
+
+.SVGlight {
+  filter: invert(100%) sepia(0%) saturate(327%) hue-rotate(29deg) brightness(118%) contrast(92%);
+}
+
+header.light,
+footer.light {
+  color: var(--background-color);
+}
