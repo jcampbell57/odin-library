@@ -23,155 +23,161 @@ const createFooter = () => {
 createFooter();
 
 
-const myLibrary = [];
+class Book {
+  constructor(title, author, yearPublished, pages, isRead = false) {
+    this.title = title;
+    this.author = author;
+    this.yearPublished = yearPublished;
+    this.pages = pages;
+    this.isRead = isRead;
+  }
 
-
-function Book(title, author, yearPublished, pages, isRead = false) {
-  this.title = title
-  this.author = author
-  this.yearPublished = yearPublished
-  this.pages = pages
-  this.isRead = isRead
-  this.info = function () {
-    info = `${this.title} by ${this.author}, ${this.pages} pages.`
+  info() {
+    let info = `${this.title} by ${this.author}, ${this.pages} pages.`;
     
-    if (this.isRead === true) {
-      info += `(${this.yearPublished}, not yet read)`
+    if (this.isRead) {
+      info += `(${this.yearPublished}, read)`;
     } else {
-      info += `(${this.yearPublished}, read)`
+      info += `(${this.yearPublished}, not yet read)`;
     }
     
-    return info
+    return info;
   }
 }
 
+class Library {
+  constructor() {
+    this.myLibrary = [];
+  }
 
-function addBookToLibrary(book) {
-  myLibrary.push(book);
-  bookIndex = myLibrary.length - 1
-  displayBook(book, bookIndex)
-}
+  addBookToLibrary(book) {
+    this.myLibrary.push(book);
+    this.displayBook(book, this.myLibrary.length - 1);
+  }
 
-function displayBook(book, index) {
-  const bookList = document.getElementById('bookList')
+  displayBook(book, index) {
+    const bookList = document.getElementById('bookList')
+    
+    // Create new row
+    const newRow = document.createElement('tr')
+    newRow.classList.add(book.isRead ? 'read' : 'notRead')
   
-  // Create new row
-  const newRow = document.createElement('tr')
-  newRow.classList.add(book.isRead ? 'read' : 'notRead')
-
-  // Add title cell
-  const titleCell = document.createElement('td');
-  titleCell.classList.add('bookTitle');
-  titleCell.textContent = book.title;
-  newRow.appendChild(titleCell);
-
-  // Add author cell
-  const authorCell = document.createElement('td');
-  authorCell.classList.add('bookAuthor');
-  authorCell.textContent = book.author;
-  newRow.appendChild(authorCell);
-
-  // Add year published cell
-  const yearCell = document.createElement('td');
-  yearCell.classList.add('bookYear');
-  yearCell.textContent = book.yearPublished;
-  newRow.appendChild(yearCell);
-
-  // Add page count cell
-  const pagesCell = document.createElement('td');
-  pagesCell.classList.add('bookPages');
-  pagesCell.textContent = `${book.pages} pages`;
-  newRow.appendChild(pagesCell);
-
-  // Add status cell
-  const statusCell = document.createElement('td');
-  statusCell.classList.add('bookStatus');
-
-  const newButton = document.createElement('button');
-  newButton.classList.add('bookStatusBtn', book.isRead ? 'read' : 'notRead');
-  newButton.textContent = book.isRead ? 'Read!' : 'Not read!';
+    // Add title cell
+    const titleCell = document.createElement('td');
+    titleCell.classList.add('bookTitle');
+    titleCell.textContent = book.title;
+    newRow.appendChild(titleCell);
   
-  const incrementStats = () => {
-    if (newButton.classList.contains('read')) {
-      bookCount.textContent = parseInt(bookCount.textContent) + 1;
-      pageCount.textContent = parseInt(pageCount.textContent) + (book.pages);
-    } else {
-      bookCount.textContent = parseInt(bookCount.textContent) - 1;
-      pageCount.textContent = parseInt(pageCount.textContent) - (book.pages);
+    // Add author cell
+    const authorCell = document.createElement('td');
+    authorCell.classList.add('bookAuthor');
+    authorCell.textContent = book.author;
+    newRow.appendChild(authorCell);
+  
+    // Add year published cell
+    const yearCell = document.createElement('td');
+    yearCell.classList.add('bookYear');
+    yearCell.textContent = book.yearPublished;
+    newRow.appendChild(yearCell);
+  
+    // Add page count cell
+    const pagesCell = document.createElement('td');
+    pagesCell.classList.add('bookPages');
+    pagesCell.textContent = `${book.pages} pages`;
+    newRow.appendChild(pagesCell);
+  
+    // Add status cell
+    const statusCell = document.createElement('td');
+    statusCell.classList.add('bookStatus');
+  
+    const newButton = document.createElement('button');
+    newButton.classList.add('bookStatusBtn', book.isRead ? 'read' : 'notRead');
+    newButton.textContent = book.isRead ? 'Read!' : 'Not read!';
+    
+    const incrementStats = () => {
+      if (newButton.classList.contains('read')) {
+        bookCount.textContent = parseInt(bookCount.textContent) + 1;
+        pageCount.textContent = parseInt(pageCount.textContent) + (book.pages);
+      } else {
+        bookCount.textContent = parseInt(bookCount.textContent) - 1;
+        pageCount.textContent = parseInt(pageCount.textContent) - (book.pages);
+      }
     }
-  }
-
-  if (book.isRead) {
-    incrementStats();
-  }
-
-  const toggleStatus = () => {
-    // const bookRow = newButton.parentElement.parentElement;
-    const bookRow = newButton .closest('tr');
-    bookRow.classList.toggle('read')
-    bookRow.classList.toggle('notRead')
-    newButton.classList.toggle('read')
-    newButton.classList.toggle('notRead')
-    newButton.textContent = newButton.classList.contains('read') ? 'Read!' : 'Not read!';
-    bookCount = document.getElementById('bookCount');
-    pageCount = document.getElementById('pageCount');
-    incrementStats();
-    };
   
-  newButton.addEventListener('click', toggleStatus);
-  statusCell.appendChild(newButton);
-  newRow.appendChild(statusCell);
+    if (book.isRead) {
+      incrementStats();
+    }
   
-  // Add delete cell
-  const removeBook = document.createElement('td');
-  removeBook.classList.add('removeBook');
-  
-  const themeToggle = document.getElementById('themeToggle')
-  const darkMode = themeToggle.classList.contains('SVGlight')
-
-  const newImg = document.createElement('img');
-  newImg.classList.add('removeBookIcon', darkMode ? undefined : 'SVGlight')
-
-  newImg.src = '../assets/delete.svg';
-  newImg.alt = 'delete';
-  
-  const deleteBook = (row) => {
-    if (row.classList.contains('read')) {
+    const toggleStatus = () => {
+      // const bookRow = newButton.parentElement.parentElement;
+      const bookRow = newButton .closest('tr');
+      bookRow.classList.toggle('read')
+      bookRow.classList.toggle('notRead')
+      newButton.classList.toggle('read')
+      newButton.classList.toggle('notRead')
+      newButton.textContent = newButton.classList.contains('read') ? 'Read!' : 'Not read!';
       bookCount = document.getElementById('bookCount');
       pageCount = document.getElementById('pageCount');
-      bookCount.textContent = parseInt(bookCount.textContent) - 1;
-      pageCount.textContent = parseInt(pageCount.textContent) - parseInt(row.querySelector('.bookPages').textContent);
+      incrementStats();
+      };
+    
+    newButton.addEventListener('click', toggleStatus);
+    statusCell.appendChild(newButton);
+    newRow.appendChild(statusCell);
+    
+    // Add delete cell
+    const removeBook = document.createElement('td');
+    removeBook.classList.add('removeBook');
+    
+    const themeToggle = document.getElementById('themeToggle')
+    const darkMode = themeToggle.classList.contains('SVGlight')
+  
+    const newImg = document.createElement('img');
+    newImg.classList.add('removeBookIcon', darkMode ? undefined : 'SVGlight')
+  
+    newImg.src = '../assets/delete.svg';
+    newImg.alt = 'delete';
+    
+    const deleteBook = (row) => {
+      if (row.classList.contains('read')) {
+        bookCount = document.getElementById('bookCount');
+        pageCount = document.getElementById('pageCount');
+        bookCount.textContent = parseInt(bookCount.textContent) - 1;
+        pageCount.textContent = parseInt(pageCount.textContent) - parseInt(row.querySelector('.bookPages').textContent);
+      }
+  
+      if (index !== -1) {
+          myLibrary.splice(index, 1);
+      }
+      row.remove();
     }
-
-    if (index !== -1) {
-        myLibrary.splice(index, 1);
-    }
-    row.remove();
+  
+    newImg.addEventListener('click', (e) => {
+      const rowToRemove = e.target.closest('tr');
+        if (rowToRemove) {
+        // Ask for confirmation before deleting
+        const confirmed = window.confirm('Are you sure you want to delete this book?');
+        if (confirmed) {
+          deleteBook(rowToRemove);
+        }      
+      }
+    });
+    
+    removeBook.appendChild(newImg);
+    newRow.appendChild(removeBook);
+  
+    // Append row to table
+    bookList.appendChild(newRow);
   }
 
-  newImg.addEventListener('click', (e) => {
-    const rowToRemove = e.target.closest('tr');
-      if (rowToRemove) {
-      // Ask for confirmation before deleting
-      const confirmed = window.confirm('Are you sure you want to delete this book?');
-      if (confirmed) {
-        deleteBook(rowToRemove);
-      }      
-    }
-  });
-  
-  removeBook.appendChild(newImg);
-  newRow.appendChild(removeBook);
-
-  // Append row to table
-  bookList.appendChild(newRow);
+  displayBooks() {
+    this.myLibrary.forEach((book, index) => {
+      this.displayBook(book, index);
+    });
+  }
 }
 
-function displayBooks() {
-  myLibrary.forEach((book, index) => {
-    displayBook(book, index)
-  })
-}
+const myLibrary = new Library();
 
 
 // Add placeholder content
@@ -196,7 +202,7 @@ placeholderBooks = placeholderBooks.sort((a, b) => a[2] - b[2]);
 
 placeholderBooks.forEach(book => {
   placeholderBook = new Book(book[0], book[1], book[2], book[3], book[4]),
-  addBookToLibrary(placeholderBook)
+  myLibrary.addBookToLibrary(placeholderBook)
 })
 
 // Grab page elements
@@ -276,7 +282,7 @@ addBookForm.addEventListener('submit', (e) => {
     clearFormFields(form);
 
     // Add book to library
-    addBookToLibrary(newBook);
+    myLibrary.addBookToLibrary(newBook);
   }
 });
 
