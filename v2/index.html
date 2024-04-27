@@ -59,11 +59,11 @@
           <br>
           <label for="bookPages"># of pages <span class="required">*</span></label>
           <br>
-          <input type="tel" id="bookPages" name="bookPages" required>
+          <input type="tel" id="bookPages" name="bookPages" min="1" required>
           <br>
           <label for="bookStatus">Read?</label>
           <input type="checkbox" id="bookStatus" name="bookStatus">
-          <span class="error" aria-hidden="true" hidden></span>
+          <span class="error" aria-live="assertive" aria-hidden="true" hidden></span>
           <br>
           <div class="formButtons">
             <button class="submitBookBtn" type="submit">Submit</button>
