@@ -414,7 +414,28 @@ function sortTable(column, dataType, header) {
   rows.forEach(row => {
     tableBody.appendChild(row);
   });
+
+  // save current sort to localStorage
+  localStorage.setItem('wormholeSort', JSON.stringify([column, sortOrder]))
 }
+
+function applySavedSorting() {
+  const savedSort = localStorage.getItem('wormholeSort')
+  console.log(savedSort)
+  if (savedSort) {
+    [column, sortOrder] = JSON.parse(savedSort)
+
+    if (column && sortOrder) {
+      const headerToSort = document.querySelector(`th[data-column="${column}"]`)
+      if (headerToSort) {
+        headerToSort.dataset.order = sortOrder === 'asc' ? 'asc' : 'desc'
+        headerToSort.click()
+      }
+    }
+  }
+}
+
+document.addEventListener('DOMContentLoaded', applySavedSorting)
 
 // Function to initialize event listeners for sorting
 function initializeSorting() {
