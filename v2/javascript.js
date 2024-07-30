@@ -347,6 +347,9 @@ function toggleDarkMode() {
   removeBookIcons.forEach(icon => {
       icon.classList.toggle('SVGlight');
   });
+
+  const currentTheme = body.classList.contains('light') ? 'light' : 'dark'
+  localStorage.setItem('wormholeTheme', currentTheme)
 }
 
 themeToggle.addEventListener('mousedown', function () {
@@ -360,6 +363,18 @@ themeToggle.addEventListener('keydown', function (event) {
     toggleDarkMode();
   }
 });
+
+function applySavedThemePreference() {
+  const savedTheme = localStorage.getItem('wormholeTheme')
+
+  if (savedTheme === 'dark' && body.classList.contains('light')) {
+    toggleDarkMode();
+  } else if (savedTheme === 'light' && !body.classList.contains('light')) {
+    toggleDarkMode();
+  }
+}
+
+document.addEventListener('DOMContentLoaded', applySavedThemePreference)
 
 
 // Table sort functionality
