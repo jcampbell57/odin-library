@@ -69,12 +69,26 @@ class Book {
 
 class Library {
   constructor() {
-    this.myLibrary = [];
+    this.myLibrary = this.loadBooks() || [];
   }
 
   addBookToLibrary(book) {
     this.myLibrary.push(book);
+    this.saveBooks();
     this.displayBook(book, this.myLibrary.length - 1);
+  }
+
+  saveBooks() {
+    localStorage.setItem('wormholeBooks', JSON.stringify(this.myLibrary))
+  }
+
+  loadBooks() {
+    const books = localStorage.getItem('wormholeBooks')
+    if (books) {
+      return JSON.parse(books)
+    } else {
+      return []
+    }
   }
 
   displayBook(book, index) {
@@ -112,12 +126,12 @@ class Library {
     const statusCell = document.createElement('td');
     statusCell.classList.add('bookStatus');
   
-    const newButton = document.createElement('button');
-    newButton.classList.add('bookStatusBtn', book.isRead ? 'read' : 'notRead');
-    newButton.textContent = book.isRead ? 'Read!' : 'Not read!';
+    const bookStatusBtn = document.createElement('button');
+    bookStatusBtn.classList.add('bookStatusBtn', book.isRead ? 'read' : 'notRead');
+    bookStatusBtn.textContent = book.isRead ? 'Read!' : 'Not read!';
     
     const incrementStats = () => {
-      if (newButton.classList.contains('read')) {
+      if (bookStatusBtn.classList.contains('read')) {
         bookCount.textContent = parseInt(bookCount.textContent) + 1;
         pageCount.textContent = parseInt(pageCount.textContent) + (book.pages);
       } else {
@@ -130,18 +144,23 @@ class Library {
       incrementStats();
     }
   
-    const toggleStatus = () => {
-      const bookRow = newButton .closest('tr');
+    const toggleStatus = (index) => {
+      const bookRow = bookStatusBtn.closest('tr');
       bookRow.classList.toggle('read')
       bookRow.classList.toggle('notRead')
-      newButton.classList.toggle('read')
-      newButton.classList.toggle('notRead')
-      newButton.textContent = newButton.classList.contains('read') ? 'Read!' : 'Not read!';
+
+      bookStatusBtn.classList.toggle('read')
+      bookStatusBtn.classList.toggle('notRead')
+      bookStatusBtn.textContent = bookStatusBtn.classList.contains('read') ? 'Read!' : 'Not read!';
+
+      this.myLibrary[index].isRead = !this.myLibrary[index].isRead
+      this.saveBooks()
+
       incrementStats();
-      };
+    };
     
-    newButton.addEventListener('click', toggleStatus);
-    statusCell.appendChild(newButton);
+    bookStatusBtn.addEventListener('click', () => toggleStatus(index));
+    statusCell.appendChild(bookStatusBtn);
     newRow.appendChild(statusCell);
     
     // Add delete cell
@@ -164,7 +183,8 @@ class Library {
       }
   
       if (index !== -1) {
-          this.myLibrary.splice(index, 1);
+        this.myLibrary.splice(index, 1);
+        this.saveBooks()
       }
 
       row.remove();
@@ -201,29 +221,36 @@ const myLibrary = new Library();
 
 // Add placeholder content
 
-placeholderBooks = [
-  ['The Intelligent Investor', 'Benjamin Graham', 1949, 460, true],
-  ['A Random Walk Down Wall Street', 'Burton Malkiel', 1973, 464, true],
-  ['The Hobbit', 'J.R.R. Tolkien', 1937, 295],
-  ['Evicted: Poverty and Profit in the American City', 'Matthew Desmond', 2016, 293, true],
-  ['Steve Jobs', 'Walter Isaacson', 2011, 630, true],
-  ['Cooked: A Natural History of Transformation', 'Michael Pollan', 2013, 480, true],
-  ['Thinking, Fast and Slow', 'Daniel Kahneman', 2011, 512],
-  ['How to Lie with Statistics', 'Darrell Huff', 1954, 145],
-  ["The Queen's Gambit", 'Walter Tevis', 1983, 266],
-  ["The Hitchhiker's Guide to the Galaxy", 'Douglas Adams', 1979, 193],
-  ['Sapiens: A Brief History of Humankind', 'Yuval Noah Harari', 2011, 414],
-  ['Crime and Punishment', 'Fyodor Dostoevsky', 1866, 671],
-]
+const addPlaceholderBooks = () => {
+  const placeholderBooks = [
+    ['The Intelligent Investor', 'Benjamin Graham', 1949, 460, true],
+    ['A Random Walk Down Wall Street', 'Burton Malkiel', 1973, 464, true],
+    ['The Hobbit', 'J.R.R. Tolkien', 1937, 295],
+    ['Evicted: Poverty and Profit in the American City', 'Matthew Desmond', 2016, 293, true],
+    ['Steve Jobs', 'Walter Isaacson', 2011, 630, true],
+    ['Cooked: A Natural History of Transformation', 'Michael Pollan', 2013, 480, true],
+    ['Thinking, Fast and Slow', 'Daniel Kahneman', 2011, 512],
+    ['How to Lie with Statistics', 'Darrell Huff', 1954, 145],
+    ["The Queen's Gambit", 'Walter Tevis', 1983, 266],
+    ["The Hitchhiker's Guide to the Galaxy", 'Douglas Adams', 1979, 193],
+    ['Sapiens: A Brief History of Humankind', 'Yuval Noah Harari', 2011, 414],
+    ['Crime and Punishment', 'Fyodor Dostoevsky', 1866, 671],
+  ]
 
-// Default sort (year published)
-placeholderBooks = placeholderBooks.sort((a, b) => a[2] - b[2]);
+  // Default sort (year published)
+  // placeholderBooks = placeholderBooks.sort((a, b) => a[2] - b[2]);
 
-placeholderBooks.forEach(book => {
-  placeholderBook = new Book(book[0], book[1], book[2], book[3], book[4]),
-  myLibrary.addBookToLibrary(placeholderBook)
-})
+  placeholderBooks.forEach(book => {
+    let newBook = new Book(book[0], book[1], book[2], book[3], book[4])
+    myLibrary.addBookToLibrary(newBook)
+  })
+}
 
+if (myLibrary.myLibrary.length === 0) {
+  addPlaceholderBooks()
+} else {
+  myLibrary.displayBooks()
+}
 
 
 // Add event listeners
@@ -294,6 +321,7 @@ closeModal.addEventListener('click', function(e) {
   e.preventDefault();
   addBookDialog.close();
 });
+
 
 
 // Dark mode toggler
