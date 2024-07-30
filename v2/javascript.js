@@ -23,6 +23,26 @@ const createFooter = () => {
 createFooter();
 
 
+
+// Grab page elements
+const body = document.querySelector('body');
+const header = document.querySelector('header');
+const logo = document.getElementById('logo');
+const themeToggle = document.getElementById('themeToggle')
+const table = document.querySelector('table')
+const thead = document.querySelector('thead')
+const addBookBtn = document.querySelector('.addBookBtn')
+const stats = document.getElementById('stats');
+const addBookDialog = document.getElementById('addBookDialog');
+const addBookForm = document.getElementById('addBookForm');
+const closeModal = document.querySelector('.closeModal');
+const footer = document.querySelector('footer');
+const githubIcon = document.querySelector('.github');
+const bookCount = document.getElementById('bookCount');
+const pageCount = document.getElementById('pageCount');
+
+
+
 class Book {
   constructor(title, author, yearPublished, pages, isRead = false) {
     this.title = title;
@@ -44,6 +64,8 @@ class Book {
     return info;
   }
 }
+
+
 
 class Library {
   constructor() {
@@ -109,15 +131,12 @@ class Library {
     }
   
     const toggleStatus = () => {
-      // const bookRow = newButton.parentElement.parentElement;
       const bookRow = newButton .closest('tr');
       bookRow.classList.toggle('read')
       bookRow.classList.toggle('notRead')
       newButton.classList.toggle('read')
       newButton.classList.toggle('notRead')
       newButton.textContent = newButton.classList.contains('read') ? 'Read!' : 'Not read!';
-      bookCount = document.getElementById('bookCount');
-      pageCount = document.getElementById('pageCount');
       incrementStats();
       };
     
@@ -140,8 +159,6 @@ class Library {
     
     const deleteBook = (row) => {
       if (row.classList.contains('read')) {
-        bookCount = document.getElementById('bookCount');
-        pageCount = document.getElementById('pageCount');
         bookCount.textContent = parseInt(bookCount.textContent) - 1;
         pageCount.textContent = parseInt(pageCount.textContent) - parseInt(row.querySelector('.bookPages').textContent);
       }
@@ -149,6 +166,7 @@ class Library {
       if (index !== -1) {
           myLibrary.splice(index, 1);
       }
+
       row.remove();
     }
   
@@ -180,6 +198,7 @@ class Library {
 const myLibrary = new Library();
 
 
+
 // Add placeholder content
 
 placeholderBooks = [
@@ -204,21 +223,6 @@ placeholderBooks.forEach(book => {
   placeholderBook = new Book(book[0], book[1], book[2], book[3], book[4]),
   myLibrary.addBookToLibrary(placeholderBook)
 })
-
-// Grab page elements
-const body = document.querySelector('body');
-const header = document.querySelector('header');
-const logo = document.getElementById('logo');
-const themeToggle = document.getElementById('themeToggle')
-const table = document.querySelector('table')
-const thead = document.querySelector('thead')
-const addBookBtn = document.querySelector('.addBookBtn')
-const stats = document.getElementById('stats');
-const addBookDialog = document.getElementById('addBookDialog');
-const addBookForm = document.getElementById('addBookForm');
-const closeModal = document.querySelector('.closeModal');
-const footer = document.querySelector('footer');
-const githubIcon = document.querySelector('.github');
 
 
 
