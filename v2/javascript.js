@@ -157,14 +157,14 @@ class Library {
     newImg.src = '../assets/delete.svg';
     newImg.alt = 'delete';
     
-    const deleteBook = (row) => {
+    const deleteBook = (row, index) => {
       if (row.classList.contains('read')) {
         bookCount.textContent = parseInt(bookCount.textContent) - 1;
         pageCount.textContent = parseInt(pageCount.textContent) - parseInt(row.querySelector('.bookPages').textContent);
       }
   
       if (index !== -1) {
-          myLibrary.splice(index, 1);
+          this.myLibrary.splice(index, 1);
       }
 
       row.remove();
@@ -176,7 +176,7 @@ class Library {
         // Ask for confirmation before deleting
         const confirmed = window.confirm('Are you sure you want to delete this book?');
         if (confirmed) {
-          deleteBook(rowToRemove);
+          deleteBook(rowToRemove, index);
         }      
       }
     });
