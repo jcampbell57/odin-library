@@ -12,7 +12,7 @@ const createFooter = () => {
   githubLink.target = '_blank';
 
   const newGithubIcon = document.createElement('img');
-  newGithubIcon.src = '../assets/GitHub-32px.png';
+  newGithubIcon.src = 'assets/GitHub-32px.png';
   newGithubIcon.classList.add('github', 'SVGlight');
 
   githubLink.appendChild(newGithubIcon);
@@ -173,7 +173,7 @@ class Library {
     const newImg = document.createElement('img');
     newImg.classList.add('removeBookIcon', darkMode ? undefined : 'SVGlight')
   
-    newImg.src = '../assets/delete.svg';
+    newImg.src = 'assets/delete.svg';
     newImg.alt = 'delete';
     
     const deleteBook = (row, index) => {
